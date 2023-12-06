@@ -2,7 +2,7 @@ import app from "./app";
 
 const port = Number(process.env.PORT) || 8000;
 
-const server = app.listen(() => {
+const server = app.listen(port, () => {
   console.log(`api-service running on ${port}`);
 });
 

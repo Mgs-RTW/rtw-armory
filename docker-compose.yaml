@@ -7,8 +7,6 @@ services:
       dockerfile: ./nginx/Dockerfile
     ports:
       - 80:80
-    networks:
-      - dsn-net
     depends_on:
       api-service:
         condition: service_healthy
@@ -27,8 +25,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - dsn-net
 
   pgAdmin:
     image: dpage/pgadmin4
@@ -39,8 +35,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
-    networks:
-      - dsn-net
 
   api-service:
     container_name: api-service
@@ -56,8 +50,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - dsn-net
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/readiness"]
       interval: 5s
