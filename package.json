@@ -2,6 +2,7 @@
   "name": "lotr-rtw",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/tools/*"
   ]
 }
