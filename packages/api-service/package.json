@@ -8,7 +8,9 @@
     "build": "tsc -b"
   },
   "devDependencies": {
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.17.10",
     "@types/node": "^20.10.3",
     "dotenv": "^16.3.1",
     "nodemon": "^3.0.2",
@@ -16,7 +18,10 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "argon2": "^0.31.2",
+    "connect-pg-simple": "^9.0.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "postgres": "^3.4.3"
   }
 }
