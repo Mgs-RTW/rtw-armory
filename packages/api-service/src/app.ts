@@ -4,6 +4,7 @@ import apiRouter from "./api";
 import {
   authMiddleware,
   errorMiddleware,
+  requiresRoleMiddleware,
   sessionMiddleware,
 } from "./middlewares";
 
@@ -11,10 +12,9 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(express.json());
 app.use(sessionMiddleware);
-app.use(authMiddleware);
 
 app.use(apiRouter);
-app.use("/admin", adminRouter);
+app.use("/admin", authMiddleware, requiresRoleMiddleware("admin"), adminRouter);
 
 app.get("/health", (req, res) => {
   res.send("Account service is OK");

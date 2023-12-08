@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import postgres from "postgres";
 
 const sql = postgres(process.env.POSTGRES_URL);
@@ -114,28 +115,29 @@ async function getLatestVersion() {
   console.log("No version found");
 }
 
-console.log("Running migrations...");
+export function runDatabaseMigrations() {
+  console.log("Running migrations...");
+  return new Promise(async (resolve, reject) => {
+    try {
+      const baseline = getLatestBaseline();
+      if (baseline) {
+        console.log(`Found baseline (${baseline}). Running it.`);
+        await runSqlFile(baseline);
+      } else {
+        console.log("No baseline found. Creating empty migration table.");
+        await initMigrationsTable();
+      }
 
-try {
-  const baseline = getLatestBaseline();
-  if (baseline) {
-    console.log(`Found baseline (${baseline}). Running it.`);
-    await runSqlFile(baseline);
-  } else {
-    console.log("No baseline found. Creating empty migration table.");
-    await initMigrationsTable();
-  }
-
-  const latestVersion = await getLatestVersion();
-  const files = getMigrationsInOrder(latestVersion);
-  for (const file of files) {
-    await runSqlFile(file);
-  }
-  console.log("Migrations complete");
-  await sql.end();
-  process.exit(0);
-} catch (error) {
-  console.log("Something went wrong.");
-  console.error(error);
-  process.exit(1);
+      const latestVersion = await getLatestVersion();
+      const files = getMigrationsInOrder(latestVersion);
+      for (const file of files) {
+        await runSqlFile(file);
+      }
+      console.log("Migrations complete");
+      await sql.end();
+      resolve(undefined);
+    } catch (error) {
+      reject(error);
+    }
+  });
 }

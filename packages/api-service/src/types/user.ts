@@ -1,4 +1,4 @@
-import { BaseEntity } from "../../db";
+import { BaseEntity } from "./base-entity";
 
 export type UserRole = "admin" | "user";
 

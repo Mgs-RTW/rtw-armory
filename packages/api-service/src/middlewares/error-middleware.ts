@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { isAuthenticationError, isInvalidCredentialsError } from "../errors";
+import {
+  isAuthenticationError,
+  isAuthorizationError,
+  isInvalidCredentialsError,
+} from "../errors";
 
 export const errorMiddleware = (
   error: Error,
@@ -9,6 +13,9 @@ export const errorMiddleware = (
 ) => {
   if (isAuthenticationError(error)) {
     return res.status(401).json({ message: "Authentication required" });
+  }
+  if (isAuthorizationError(error)) {
+    return res.status(403).json({ message: "Insufficient permissions" });
   }
   if (isInvalidCredentialsError(error)) {
     return res.status(400).json({ message: "Invalid credentials" });
