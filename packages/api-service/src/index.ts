@@ -1,9 +1,11 @@
 import app from "./app";
 import pg from "pg";
 import fs from "fs";
-import { runDatabaseMigrations } from "./db";
+import { runDatabaseMigrations, sql } from "./db";
 
 const port = Number(process.env.PORT) || 8000;
+
+sql`SELECT * FROM migration`.then((res) => console.log(res));
 
 /*
 const pool = new pg.Pool({
