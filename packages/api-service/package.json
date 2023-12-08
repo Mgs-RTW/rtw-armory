@@ -8,6 +8,7 @@
     "build": "tsc -b"
   },
   "devDependencies": {
+    "@lotr-rtw/service-types": "*",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.17.10",

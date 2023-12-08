@@ -1,7 +1,7 @@
 import argon2 from "argon2";
+import { ApiUser } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 import { InvalidCredentialsError } from "../../errors";
-import { ApiUser } from "../../types";
 
 interface DbUser extends ApiUser {
   password: string;

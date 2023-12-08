@@ -6,8 +6,10 @@ COPY package.json .
 COPY package-lock.json .
 COPY tsconfig.json .
 
+COPY ./packages/service-types/package.json packages/service-types/
 COPY ./packages/api-service/package.json packages/api-service/
 RUN npm -w @lotr-rtw/api-service ci
+COPY ./packages/service-types packages/service-types/
 COPY ./packages/api-service packages/api-service/
 RUN npm -w @lotr-rtw/api-service run build
 

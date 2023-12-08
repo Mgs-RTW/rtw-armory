@@ -1,0 +1,12 @@
+{
+  "name": "@lotr-rtw/service-types",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3"
+  }
+}

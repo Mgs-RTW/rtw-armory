@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+import { UserRole } from "@lotr-rtw/service-types";
 import { sql } from "../db";
 import { AuthorizationError } from "../errors";
-import { UserRole } from "../types";
 
 export function requiresRoleMiddleware(role: UserRole) {
   return async function (req: Request, res: Response, next: NextFunction) {
