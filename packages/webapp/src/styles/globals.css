@@ -1,0 +1,46 @@
+@import "./resets.css";
+@import "./variables.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  color-scheme: dark;
+  font-weight: var(--font-weight-regular);
+  max-width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input {
+  border: none;
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-medium);
+}
+
+span,
+p {
+  font-size: var(--font-size-body-sm);
+}

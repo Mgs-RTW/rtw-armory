@@ -1,0 +1,37 @@
+:root {
+  --header-height: 80px;
+
+  /* Spacings */
+  --space-1000: 10rem; /* 160px */
+  --space-750: 7.5rem; /* 120px */
+  --space-550: 5.5rem; /* 88px */
+  --space-400: 4rem; /* 64px */
+  --space-300: 3rem; /* 48px */
+  --space-250: 2.5rem; /* 40px */
+  --space-200: 2rem; /* 32px */
+  --space-150: 1.5rem; /* 24px */
+  --space-125: 1.25rem; /* 20px */
+  --space-100: 1rem; /* 16px */
+  --space-75: 0.75rem; /* 12px */
+  --space-50: 0.5rem; /* 8px */
+  --space-25: 0.25rem; /* 4px */
+  --input-background: #323232;
+
+  /* Typography */
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --font-size-headline-display: 3.75rem; /* 60px */
+  --font-size-headline-xl: 3.125rem; /* 50px */
+  --font-size-headline-lg: 2.5rem; /* 40px */
+  --font-size-headline-md: 2rem; /* 32px */
+  --font-size-headline-sm: 1.5rem; /* 24px */
+  --font-size-headline-xs: 1.25rem; /* 20px */
+  --font-size-body-xl: 2rem; /* 32px */
+  --font-size-body-lg: 1.5rem; /* 24px */
+  --font-size-body-md: 1.25rem; /* 20px */
+  --font-size-body-sm: 1rem; /* 16px */
+  --font-size-body-xs: 0.875rem; /* 14px */
+
+  --yellow-primary: #ffd578;
+}

@@ -1,8 +1,5 @@
 import fs from "fs";
-import path from "path";
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL);
+import { sql } from "./db";
 
 type Migration = {
   id: string;
@@ -134,7 +131,6 @@ export function runDatabaseMigrations() {
         await runSqlFile(file);
       }
       console.log("Migrations complete");
-      await sql.end();
       resolve(undefined);
     } catch (error) {
       reject(error);
