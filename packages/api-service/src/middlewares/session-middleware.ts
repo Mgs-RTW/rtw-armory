@@ -1,5 +1,6 @@
 import session from "express-session";
 import pgConnect from "connect-pg-simple";
+import { databaseConfig } from "../db";
 
 declare module "express-session" {
   interface SessionData {
@@ -15,7 +16,7 @@ export const sessionMiddleware = session({
   resave: true,
   saveUninitialized: false,
   store: new PgSession({
-    conString: process.env.POSTGRES_URL,
+    conObject: databaseConfig,
     tableName: "session",
   }),
   cookie: {

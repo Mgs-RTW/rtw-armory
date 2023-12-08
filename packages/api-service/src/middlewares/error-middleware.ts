@@ -11,6 +11,10 @@ export const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("Error: ", error);
+  if (res.headersSent) {
+    return next(error);
+  }
   if (isAuthenticationError(error)) {
     return res.status(401).json({ message: "Authentication required" });
   }
