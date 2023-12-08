@@ -1,0 +1,54 @@
+name: Build, push and deploy api-service
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  PROJECT_ID: rtw-armory
+  REGION: europe-north1
+  GAR_LOCATION: europe-north1-docker.pkg.dev/rtw-armory/rtw-armory-artifact-registry-prod
+  DOCKERFILE_LOCATION: packages/api-service/Dockerfile
+  GKE_CLUSTER: rtw-armory
+  GKE_ZONE: europe-north1-b
+
+jobs:
+  build-push-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+      - name: Build image
+        run: |-
+          docker build . -t ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
+          docker build . -t ${{ env.GAR_LOCATION }}/api-service:latest -f ${{ env.DOCKERFILE_LOCATION }}
+
+      - name: Push image
+        run: |-
+          docker push ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)
+          docker push ${{ env.GAR_LOCATION }}/api-service:latest
+
+      - id: "get-credentials"
+        uses: "google-github-actions/get-gke-credentials@v1"
+        with:
+          cluster_name: "${{ env.GKE_CLUSTER }}"
+          location: "${{ env.GKE_ZONE }}"
+        # Deploy the Docker image to the GKE cluster
+      - name: Deploy
+        run: |-
+          kubectl set image deployment/api-service api-service=${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)
