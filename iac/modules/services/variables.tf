@@ -25,6 +25,12 @@ variable "gke_cluster" {
 variable "postgres" {
   default = {
     user : "",
-    password : ""
+    password : "",
+    db : "",
+    port : 0,
+    host : ""
   }
+}
+
+variable "session_secret" {
 }

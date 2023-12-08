@@ -11,3 +11,9 @@ variable "k8s" {
     node_count   = 1
   }
 }
+
+variable "postgres" {
+}
+
+variable "session_secret" {
+}

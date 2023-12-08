@@ -1,34 +1,30 @@
-brew install --cask google-cloud-sdk
-brew install terraform
-gcloud config set project rtw-armory
+# Setup
 
-alias dfimage="docker run -v /var/run/docker.sock:/var/run/docker.sock --rm alpine/dfimage"
-
-gcloud auth application-default login
 code ~/.zshrc
 alias (tf)="terraform"
 source ~/.zshrc
-gcloud container clusters get-credentials rtw-armory --zone europe-north1-b --project rtw-armory
 
-dfimage "europe-north1-docker.pkg.dev/rtw-armory/rtw-armory-artifact-registry-prod/api-service:latest"
-# Init connects you to the Azure terraform state backend, if you skipped step 3 here this will fail
+# Kevin
 
-terraform init -backend-config="bucket=rtw-armory-anders" -reconfigure
+tf init -backend-config="bucket=rtw-armory-kevin" -reconfigure
 
-terraform init -backend-config="bucket=rtw-armory-terraform-states" -reconfigure
+# Anders
 
-# Select current workspace dev,qa or run
+tf init -backend-config="bucket=rtw-armory-anders" -reconfigure
+tf init -backend-config="bucket=rtw-armory-terraform-states" -reconfigure
 
-terraform select {{environment}}
+# Select current workspace local or prod
+
+tf select gcp
 
 # First preview changes via
 
-terraform plan -var-file="./environments/{{environment}}.tfvars"
+tf plan -var-file="./vars/gcp.tfvars"
 
 # Apply changes via
 
-terraform apply -var-file="./environments/{{environment}}.tfvars"
+tf apply -var-file="./vars/gcp.tfvars"
 
 # Teardown
 
-terraform destroy -var-file="./environments/{{environment}}.tfvars"
+tf destroy -var-file="./vars/gcp.tfvars"

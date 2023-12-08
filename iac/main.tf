@@ -23,5 +23,7 @@ provider "kubernetes" {
 }
 
 module "services" {
-  source = "./modules/services"
+  source         = "./modules/services"
+  session_secret = var.session_secret
+  postgres       = var.postgres
 }

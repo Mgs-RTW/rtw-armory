@@ -32,13 +32,39 @@ resource "kubernetes_deployment" "api-service" {
           }
 
           env {
-            name  = "POSTGRES_URL"
-            value = "postgres://avnadmin:AVNS_g2eLQdMdem6BwyU5jmZ@rtw-armory-rtw-armory.a.aivencloud.com:10143/defaultdb?sslmode=require"
+            name  = "NODE_ENV"
+            value = "production"
+          }
+
+          env {
+            name  = "PG_HOST"
+            value = var.postgres.host
+          }
+
+          env {
+            name  = "PG_PORT"
+            value = var.postgres.port
+          }
+
+          env {
+            name  = "PG_DATABASE"
+            value = var.postgres.db
+          }
+
+
+          env {
+            name  = "PG_USER"
+            value = var.postgres.user
+          }
+
+          env {
+            name  = "PG_PASSWORD"
+            value = var.postgres.password
           }
 
           env {
             name  = "SESSION_SECRET"
-            value = "e816911d-db8a-4e91-82d4-7252820877b7"
+            value = var.session_secret
           }
 
           resources {
