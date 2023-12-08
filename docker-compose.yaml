@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      api-service:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=lotr
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "lotr", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: pgAdmin
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+
+  api-service:
+    container_name: api-service
+    env_file:
+      - ./packages/api-service/.env
+    build:
+      context: .
+      dockerfile: ./packages/api-service/Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./packages/api-service:/usr/app/packages/api-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dsn-net:
+
