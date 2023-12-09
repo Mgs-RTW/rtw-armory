@@ -16,6 +16,15 @@ body {
   overflow-x: hidden;
 }
 
+html[data-side="good"] {
+  background-size: cover;
+  background: url("/goodside_background.webp") no-repeat;
+}
+html[data-side="evil"] {
+  background-size: cover;
+  background: url("/evilside_background.webp") no-repeat;
+}
+
 body {
   font-size: 16px;
 }

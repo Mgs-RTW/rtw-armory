@@ -1,6 +1,48 @@
 .root {
   display: flex;
   flex-direction: column;
+  flex: 1 0 auto;
   justify-content: space-between;
   height: 100%;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-75);
+    padding: var(--space-25);
+
+    .SideToggler {
+      display: flex;
+      flex-direction: column;
+      background: #131313;
+      gap: var(--space-75);
+      padding: var(--space-50);
+      width: max-content;
+    }
+
+    .CommanderList {
+      display: flex;
+      align-items: center;
+      gap: var(--space-100);
+
+      .CommanderItem {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 1px solid var(--yellow-primary);
+      }
+
+      .CommanderItem[data-state="selected"] {
+        border: 3px solid var(--yellow-primary);
+      }
+    }
+  }
+
+  .StatsContainer {
+    width: 100%;
+    height: 300px;
+    opacity: 0.8;
+    background: linear-gradient(rgb(31, 37, 42), rgb(12, 15, 16));
+  }
 }
