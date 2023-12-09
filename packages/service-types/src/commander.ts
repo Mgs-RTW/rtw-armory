@@ -11,19 +11,9 @@ enum CommanderTier {
     T3
 }
 
-enum CommanderRace {
-    Orc,
-    UrukHai,
-    Maiar,
-    Elf,
-    Men,
-    Dwarf,
-    EvilMen,
-    Undead
-}
-
 export interface CommanderAttributes extends BaseEntity {
-    damage: string;
+    minDamage: number;
+    maxDamage: number;
     hp: number;
     command: number;
     attack: number;
@@ -38,5 +28,5 @@ export interface Commander extends BaseEntity {
     tier: CommanderTier;
     alignment: CommanderAlignment;
     baseData: CommanderAttributes;
-    race: CommanderRace;
+    raceId: string;
 }

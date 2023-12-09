@@ -7,7 +7,7 @@ export const databaseConfig = {
   host: process.env.PG_HOST,
   port: Number(process.env.PG_PORT),
   database: process.env.PG_DATABASE,
-  ssl: {
+  ssl: process.env.NODE_ENV === 'development' ? false : {
     rejectUnauthorized: true,
     ca: fs.readFileSync("keys/pg-cert.pem", "utf8").toString(),
   },
