@@ -19,7 +19,7 @@ function getDestinationFolderFromArea(area: string) {
 
 export function singleFileUploadHandler(): any {
     const gcs: MulterGoogleCloudStorage = new MulterGoogleCloudStorage({
-        bucket: process.env.GCS,
+        bucket: process.env.GCS_BUCKET,
         projectId: process.env.GCLOUD_PROJECT,
         keyFile: "keys/gcs-sa.json",
         destination: function (req: Request, file: any, cb: any) {
