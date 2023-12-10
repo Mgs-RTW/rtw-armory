@@ -1,7 +1,7 @@
 import express from "express";
 import { initGearRoutes } from "./gear/routes";
-import { initCommanderRoutes } from "./commander/routes"
-import { initRaceRoutes } from './race/routes'
+import { initCommanderRoutes } from "./commander/routes";
+import { initRaceRoutes } from "./race/routes";
 
 const router = express.Router();
 

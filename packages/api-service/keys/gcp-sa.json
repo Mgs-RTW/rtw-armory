@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "rtw-armory",
+  "private_key_id": "a8d45eaa371d3b5150d2d36d1b80d79dac45bd04",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvjlbs1xKV2YaZ\nvvtlfTsjev3BaOdaKB6KJ9pTASDWDBa2SFI2UZPif3yzWAsU0w3/6GHTitTqkEgg\nJhe6mr7jtyIS9PQ6g/Ir84hLPdb5wLBla6bTkVwge+GDBYEbUF0SoV+uNblFdobj\n43vttDlNsfKnGCpiO2VMBbm3EKWO57h9iZrgryD+HEB7VfKTR8l1w8tmH2NLybw9\nPvkZKUkKO5ET/rXe1lmgLWh7qlJK3Km0/igYhIlDHW+zi3Q3jB1KKQBnZiaxGltF\n8BtCiXh7rI59B4HAEYiH8wcSorHcBgsCfY7IJX3zR9yrY/kyC4ZscyFKpKFoiQss\nxCXowGZHAgMBAAECggEAOL6yEzD7pWsf6k9ElEvz0yacoikl6srgADkchUrukbFr\nn/TlegBJZGNf69pwDoWf11GGWWndI4qKfbXCYsNFI3bc8TKzRLzEiPdZXTS6aZUi\nj03KKUWpeSiBvqeHUUxbITv/IODlp3HF7SBpPO7NvPLhY6hYftMDDZ0mJ+meEgAD\n6lCdEtZumYFmUf+i6gUWJgTjQBlY0opUtEbr06np//fdJXPSrTsSaavaXmFYRNtC\nihg8o1JU057QMZMGnGTUFrPADiyZ+cyatW5uk+kAzUZufwef5uakvwF+uu0av2eD\nMpjjC2xSGrTIlXFtOGitkwQK78KRXWneoC6/Ab8SrQKBgQDmQlw+aqVzOkP4EB0R\n3i/02duF+cJo2y8Ddf5QZa6GsxpXQlm6pX6W8tWZ2OuEHswpkuH0XUyYUv9mwMHy\n7aaPUGP/X2pd0dJzWHBXfu5Kc4EmBDzPGTI60oBx83tvcioO8FZF8DEdTmTD731Y\nFnd4w76zNSXQaPS7KAymbZ5pOwKBgQDDLnarXSSUmVkwNsxqw12FnvhrW55Q7TjG\n5fDLeWu94Fx7kBixRqa7v+JPvFORgniSGWM42sdO7b2vOb8zT9x/R7NpUABgBmYO\nwYnkR8V+ERLDhRABZYdfSNBPWcFCzmDQeTAnM5oVxA+3bgtAJY49oKkxEFKv3KIS\nG2Iut8SGZQKBgQC3UBd9/Ytwm+9muvVZt0j4psSU+c0ji3P3TmXD/d+fD1GmLIWh\nCYYpiHQzQjXl/lrNskk/MVP8ZP89/7GoxDh5GigyM/VLcfMYr0zo632sOh6UdIUw\n3z9VAycNESmxBPOk5wPYNCv1x+aC8tQYX/KHa1cT9vj+3cAQjAbeLKET5wKBgBEw\nqmr1TR95Ug2ZBe/xPO9jzOVHsG3YNsPtxINnMkIK3JpVWpdibZTjlX8ISyPppczY\nR5DeU+dzsN0Z7OkMA5OCMR75WM8cQSjTit18JLyxrEFkGsDEvGN7+jzC3u6PVp+F\nzOPm+48nMWsqWftQU3LCD6Sul1m9yNhnaQJMVRaxAoGAIQsxIMTn8sQz0sK1lbxg\nVhVn025JQCKxMyH5i8gIZTDYMuDKMiWmIi7cDCubGvgTITMsao58PeU7D0KouxJH\nkC86EPDj8uOugaokNAxYzPBqsrq+9fxEvNKFZjmXH3smOPInbAec0Su5GUhmO/SB\nCVxDZcSkvZHvyTja6CTvmBI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gcs-rtw-armory@rtw-armory.iam.gserviceaccount.com",
+  "client_id": "113618662294292027328",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gcs-rtw-armory%40rtw-armory.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

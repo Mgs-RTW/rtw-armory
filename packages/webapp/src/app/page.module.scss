@@ -41,8 +41,9 @@
 
   .StatsContainer {
     width: 100%;
-    height: 300px;
-    opacity: 0.8;
-    background: linear-gradient(rgb(31, 37, 42), rgb(12, 15, 16));
+    // TODO: Change this to appropriate when background image is portrait
+    height: 280px;
+    // TODO: Change opacity to correct when background image is portrait
+    background: linear-gradient(rgba(31, 37, 42, 1), rgba(31, 37, 42, 1));
   }
 }

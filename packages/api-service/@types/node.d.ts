@@ -7,6 +7,8 @@ declare namespace NodeJS {
     PG_DATABASE: string;
     SESSION_SECRET: string;
     NODE_ENV: string;
+    GCS_BUCKET: string;
+    GCLOUD_PROJECT: string;
     PORT?: string;
   }
 }

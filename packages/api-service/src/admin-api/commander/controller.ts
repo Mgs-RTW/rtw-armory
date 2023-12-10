@@ -1,19 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { getCommanders, createCommander } from "./service";
-import { Commander } from '@lotr-rtw/service-types';
-
-export const get = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const commander = await getCommanders();
-    res.json(commander);
-  } catch (error) {
-    next(error);
-  }
-};
+import { createCommander } from "./service";
+import { Commander } from "@lotr-rtw/service-types";
 
 export const create = async (
   req: Request,
@@ -21,9 +8,9 @@ export const create = async (
   next: NextFunction
 ) => {
   try {
-    const commander = req.body as Commander
+    const commander = req.body as Commander;
     if (!commander) {
-      throw new Error('No commander sent in request.')
+      throw new Error("No commander sent in request.");
     }
     const commanderCreated = await createCommander(commander);
     res.json(commanderCreated);
@@ -31,4 +18,3 @@ export const create = async (
     next(error);
   }
 };
-
