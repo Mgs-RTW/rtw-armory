@@ -67,6 +67,16 @@ resource "kubernetes_deployment" "api-service" {
             value = var.session_secret
           }
 
+          env {
+            name  = "GCS_BUCKET"
+            value = "rtw-armory"
+          }
+
+          env {
+            name  = "GCLOUD_PROJECT"
+            value = "rtw-armory"
+          }
+
           resources {
             limits = {
               cpu    = "200m"
@@ -91,11 +101,15 @@ resource "kubernetes_deployment" "api-service" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [spec[0].template[0].spec[0].container[0].image]
+  }
 }
 
-resource "kubernetes_service" "api-service" {
+resource "kubernetes_service_v1" "example" {
   metadata {
-    name = "mail-service"
+    name = "api-service"
   }
   spec {
     selector = {
@@ -103,7 +117,7 @@ resource "kubernetes_service" "api-service" {
     }
     session_affinity = "ClientIP"
     port {
-      port        = 8080
+      port        = 80
       target_port = 8000
     }
 
