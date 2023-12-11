@@ -1,0 +1,74 @@
+.root {
+  width: 100%;
+  padding: var(--space-100) var(--space-200) 0 var(--space-200);
+
+  // TODO: Change this to appropriate when background image is portrait
+  height: 280px;
+  // TODO: Change opacity to correct when background image is portrait
+  background: linear-gradient(rgba(31, 37, 42, 1), rgba(31, 37, 42, 1));
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (width >= 500px) {
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(31, 37, 42, 0.1),
+      rgba(31, 37, 42, 1)
+    );
+  }
+
+  .CommanderName {
+    color: var(--yellow-primary);
+    margin-bottom: var(--space-75);
+    margin-left: -2px;
+  }
+
+  .StatsList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    li {
+      padding: var(--space-25) 0;
+      border-bottom: 1px solid var(--yellow-900);
+      display: flex;
+      flex: 1 0 auto;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .GearSlots {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: var(--space-200);
+
+    .Slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: var(--blue-900);
+      border: 2px solid var(--yellow-900);
+      background-size: cover;
+    }
+
+    .Slot[data-slot="weapon"][data-state="empty"] {
+      background-image: url("/weapon_placeholder.png");
+    }
+    .Slot[data-slot="chest"][data-state="empty"] {
+      background-image: url("/chest_placeholder.png");
+    }
+    .Slot[data-slot="helmet"][data-state="empty"] {
+      background-image: url("/helmet_placeholder.png");
+    }
+    .Slot[data-slot="accessory"][data-state="empty"] {
+      background-image: url("/accessory_placeholder.png");
+    }
+  }
+}

@@ -5,12 +5,21 @@
   justify-content: space-between;
   height: 100%;
 
+  @media screen and (width >= 500px) {
+    flex-direction: row;
+  }
+
   .wrapper {
     display: flex;
     align-items: center;
     width: 100%;
     gap: var(--space-75);
     padding: var(--space-25);
+
+    @media screen and (width >= 500px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
     .SideToggler {
       display: flex;
@@ -26,24 +35,20 @@
       align-items: center;
       gap: var(--space-100);
 
+      @media screen and (width >= 500px) {
+        flex-direction: column;
+      }
+
       .CommanderItem {
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        border: 1px solid var(--yellow-primary);
+        border: 0.5px solid var(--yellow-primary);
       }
 
       .CommanderItem[data-state="selected"] {
         border: 3px solid var(--yellow-primary);
       }
     }
-  }
-
-  .StatsContainer {
-    width: 100%;
-    // TODO: Change this to appropriate when background image is portrait
-    height: 280px;
-    // TODO: Change opacity to correct when background image is portrait
-    background: linear-gradient(rgba(31, 37, 42, 1), rgba(31, 37, 42, 1));
   }
 }

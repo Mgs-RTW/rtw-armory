@@ -10,7 +10,7 @@ export async function getAllCommanders() {
         tier, 
         alignment, 
         cr.id as raceId,
-        to_json(ca) as baseData
+        to_json(ca) as "baseData"
         FROM commander c 
         JOIN race cr on cr.id = c.race_id
         LEFT JOIN commander_attributes ca

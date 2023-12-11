@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import clsx from "clsx";
 import styles from "./page.module.scss";
+import { useCommandersQuery } from "@/domain/commander";
+import { Image } from "@/components";
+import { CommanderStats } from "./components";
+import { Commander } from "@lotr-rtw/service-types";
 
 type Side = "good" | "evil";
 
-const commanders = new Array(4).fill(null);
-
 export default function Home() {
   const [side, setSide] = useState<Side>("good");
-  const [activeCommander, setActiveCommander] = useState(0);
+  const [activeCommander, setActiveCommander] = useState<Commander | undefined>(
+    undefined
+  );
+  const { data: commanders } = useCommandersQuery();
 
   const toggleSide = (side: Side) => {
     setSide(side);
@@ -25,17 +29,21 @@ export default function Home() {
           <button onClick={() => toggleSide("evil")}>Bad</button>
         </div>
         <ul className={styles.CommanderList}>
-          {commanders.map((commander, i) => (
+          {commanders?.map((commander, i) => (
             <li
-              data-state={i === activeCommander ? "selected" : undefined}
-              onClick={() => setActiveCommander(i)}
+              data-state={
+                commander.id === activeCommander?.id ? "selected" : undefined
+              }
+              onClick={() => setActiveCommander(commander)}
               className={styles.CommanderItem}
               key={i}
-            ></li>
+            >
+              <Image alt={commander.name} src={commander.image} />
+            </li>
           ))}
         </ul>
       </div>
-      <div className={styles.StatsContainer}></div>
+      <CommanderStats commander={activeCommander} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 :root {
-  --header-height: 80px;
+  --header-height: 60px;
 
   /* Spacings */
   --space-1000: 10rem; /* 160px */
@@ -33,5 +33,17 @@
   --font-size-body-sm: 1rem; /* 16px */
   --font-size-body-xs: 0.875rem; /* 14px */
 
-  --yellow-primary: #ffd578;
+  --yellow-50: #ffeabb;
+  --yellow-100: #ffe5ae;
+  --yellow-200: #ffe1a0;
+  --yellow-300: #ffdd93;
+  --yellow-400: #ffd985;
+  --yellow-500: #ffd578;
+  --yellow-600: #e5bf6c;
+  --yellow-700: #ccaa60;
+  --yellow-800: #b29554;
+  --yellow-900: #997f48;
+  --yellow-primary: var(--yellow-500);
+
+  --blue-900: #0a131c;
 }

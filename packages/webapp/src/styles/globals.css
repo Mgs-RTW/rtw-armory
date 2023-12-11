@@ -18,11 +18,17 @@ body {
 
 html[data-side="good"] {
   background-size: cover;
-  background: url("/goodside_background.webp") no-repeat;
+  background: url("/goodside_background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 html[data-side="evil"] {
   background-size: cover;
-  background: url("/evilside_background.webp") no-repeat;
+  background: url("/evilside_background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 body {
