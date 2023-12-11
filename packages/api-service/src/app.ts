@@ -7,6 +7,7 @@ import {
   requiresRoleMiddleware,
   sessionMiddleware,
 } from "./middlewares";
+import { extractAvailableEndpointsFromRouters } from "./util/express";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -15,6 +16,13 @@ app.use(sessionMiddleware);
 
 app.use(apiRouter);
 app.use("/admin", authMiddleware, requiresRoleMiddleware("admin"), adminRouter);
+
+const availableRoutes = extractAvailableEndpointsFromRouters([
+  { prefix: "/admin", router: adminRouter },
+  { router: apiRouter },
+]);
+
+console.log("Available routes", availableRoutes);
 
 app.get("/health", (req, res) => {
   res.send("Account service is OK");
