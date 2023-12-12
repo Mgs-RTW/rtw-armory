@@ -2,19 +2,16 @@
 
 import { useState } from "react";
 import styles from "./page.module.scss";
-import { useCommandersQuery } from "@/domain/commander";
+import { useCommandersQuery, useCommanderStore } from "@/domain/commander";
 import { Image } from "@/components";
-import { CommanderStats } from "./components";
-import { Commander } from "@lotr-rtw/service-types";
+import { CommanderGear, CommanderStats } from "./components";
 
 type Side = "good" | "evil";
 
 export default function Home() {
   const [side, setSide] = useState<Side>("good");
-  const [activeCommander, setActiveCommander] = useState<Commander | undefined>(
-    undefined
-  );
   const { data: commanders } = useCommandersQuery();
+  const [commander, setCommander] = useCommanderStore();
 
   const toggleSide = (side: Side) => {
     setSide(side);
@@ -29,21 +26,29 @@ export default function Home() {
           <button onClick={() => toggleSide("evil")}>Bad</button>
         </div>
         <ul className={styles.CommanderList}>
-          {commanders?.map((commander, i) => (
+          {commanders?.map((el, i) => (
             <li
-              data-state={
-                commander.id === activeCommander?.id ? "selected" : undefined
-              }
-              onClick={() => setActiveCommander(commander)}
-              className={styles.CommanderItem}
               key={i}
+              data-state={el.id === commander?.id ? "selected" : undefined}
+              onClick={() => setCommander(el)}
+              className={styles.CommanderItem}
             >
-              <Image alt={commander.name} src={commander.image} />
+              <Image alt={el.name} src={el.image} />
             </li>
           ))}
         </ul>
       </div>
-      <CommanderStats commander={activeCommander} />
+      {commander && (
+        <div className={styles.CharacterImage}>
+          <Image alt="Commander image" src="/gandalf_commander.png" />
+        </div>
+      )}
+      {commander && (
+        <div className={styles.StatsAndGear}>
+          <CommanderStats commander={commander} />
+          <CommanderGear />
+        </div>
+      )}
     </div>
   );
 }

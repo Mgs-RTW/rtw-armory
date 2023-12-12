@@ -1,18 +1,14 @@
 "use client";
 
-import { Commander } from "@lotr-rtw/service-types";
 import { ReactNode } from "react";
+import { Commander } from "@lotr-rtw/service-types";
 import styles from "./commander-stats.module.scss";
 
 interface Props {
-  commander: Commander | undefined;
+  commander: Commander;
 }
 
 export const CommanderStats = ({ commander }: Props) => {
-  if (!commander) {
-    return <div className={styles.root}></div>;
-  }
-
   const { name, baseData } = commander;
 
   return (
@@ -36,16 +32,6 @@ export const CommanderStats = ({ commander }: Props) => {
           <p>{baseData.initiative}</p>
         </li>
       </ul>
-      <div className={styles.GearSlots}>
-        {["weapon", "chest", "helmet", "accessory"].map((slot, i) => (
-          <div
-            key={slot}
-            className={styles.Slot}
-            data-slot={slot}
-            data-state="empty"
-          ></div>
-        ))}
-      </div>
     </div>
   );
 };

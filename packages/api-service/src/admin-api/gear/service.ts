@@ -2,7 +2,7 @@ import { Gear, GearAttribute, GearSkill } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
 export async function getGear() {
-    const gear: Gear[] = await sql`
+  const gear = await sql<Gear[]>`
     SELECT 
     g.id, 
     name, 
@@ -10,36 +10,39 @@ export async function getGear() {
     description, 
     slot, 
     rarity,
+    race_id,
     json_agg(ga) as attributes
     FROM gear g
     LEFT JOIN gear_attribute ga ON ga.gear_id = g.id
     GROUP BY g.id;
     `;
-    return gear;
+  return gear;
 }
 
 export async function createGear(gear: Gear) {
-    const [gearSavedInDb]: [Gear] = await sql`
+  const [gearSavedInDb]: [Gear] = await sql`
     INSERT INTO gear (
         name,
         image,
         description,
         slot,
-        rarity
+        rarity,
+        race_id
     )
     VALUES (
         ${gear.name}, 
         ${gear.image},
         ${gear.description},
         ${gear.slot},
-        ${gear.rarity}
+        ${gear.rarity},
+        ${gear.raceId}
         ) RETURNING *
-    `
+    `;
 
-    if (gear.attributes && gear.attributes.length > 0) {
-        gearSavedInDb.attributes = []
-        for (const attribute of gear.attributes) {
-            const [gearAttribute]: [GearAttribute] = await sql`
+  if (gear.attributes && gear.attributes.length > 0) {
+    gearSavedInDb.attributes = [];
+    for (const attribute of gear.attributes) {
+      const [gearAttribute]: [GearAttribute] = await sql`
             INSERT INTO gear_attribute (
                 target,
                 modifier,
@@ -52,16 +55,16 @@ export async function createGear(gear: Gear) {
                 ${attribute.amount},
                 ${gearSavedInDb.id}
                 ) RETURNING *
-            `
-            gearSavedInDb.attributes.push(gearAttribute)
-        }
+            `;
+      gearSavedInDb.attributes.push(gearAttribute);
     }
+  }
 
-    return gearSavedInDb;
+  return gearSavedInDb;
 }
 
 export async function getGearSkills() {
-    const gear: Gear[] = await sql`
+  const gear = await sql<Gear[]>`
     SELECT 
         name,
         target,
@@ -70,12 +73,11 @@ export async function getGearSkills() {
         maxAmount
     FROM gear_skill
     `;
-    return gear;
+  return gear;
 }
 
-
 export async function createGearSkill(gearSkill: GearSkill) {
-    const [gearSkillSavedInDb]: [GearSkill] = await sql`
+  const [gearSkillSavedInDb]: [GearSkill] = await sql`
      INSERT INTO gear_skill (
         name,
         target,
@@ -90,12 +92,15 @@ export async function createGearSkill(gearSkill: GearSkill) {
         ${gearSkill.minAmount},
         ${gearSkill.maxAmount}
         ) RETURNING *
-    `
-    return gearSkillSavedInDb;
+    `;
+  return gearSkillSavedInDb;
 }
 
-export async function createGearSkillToGearLink(gearId: string, gearSkillId: string) {
-    const [createdGearSkillToGearLink]: [GearSkill] = await sql`
+export async function createGearSkillToGearLink(
+  gearId: string,
+  gearSkillId: string
+) {
+  const [createdGearSkillToGearLink]: [GearSkill] = await sql`
     INSERT INTO gear_gear_skill (
         gear_id,
         gear_skill_id
@@ -104,6 +109,6 @@ export async function createGearSkillToGearLink(gearId: string, gearSkillId: str
         ${gearId},
         ${gearSkillId}
         ) RETURNING *
-    `
-    return createdGearSkillToGearLink;
+    `;
+  return createdGearSkillToGearLink;
 }
