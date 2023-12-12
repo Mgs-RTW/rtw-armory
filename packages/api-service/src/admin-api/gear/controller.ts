@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import * as service from './service'
-import { Gear, GearSkill } from '@lotr-rtw/service-types';
+import * as service from "./service";
+import { Gear, GearSkill } from "@lotr-rtw/service-types";
 
 export const getGear = async (
   req: Request,
@@ -21,9 +21,9 @@ export const createGear = async (
   next: NextFunction
 ) => {
   try {
-    const gear = req.body as Gear
+    const gear = req.body as Gear;
     if (!gear) {
-      throw new Error('No gear sent in request.')
+      throw new Error("No gear sent in request.");
     }
     const gearCreated = await service.createGear(gear);
     res.json(gearCreated);
@@ -31,7 +31,6 @@ export const createGear = async (
     next(error);
   }
 };
-
 
 export const getGearSkills = async (
   req: Request,
@@ -52,10 +51,10 @@ export const createGearSkill = async (
   next: NextFunction
 ) => {
   try {
-    const gearSkill = req.body as GearSkill
-    console.log(gearSkill)
+    const gearSkill = req.body as GearSkill;
+    console.log(gearSkill);
     if (!gearSkill) {
-      throw new Error('No gear sent in request.')
+      throw new Error("No gear sent in request.");
     }
     const gearCreated = await service.createGearSkill(gearSkill);
     res.json(gearCreated);
@@ -70,11 +69,14 @@ export const createGearSkillToGearLink = async (
   next: NextFunction
 ) => {
   try {
-    const { gearId, gearSkillId } = req.body
+    const { gearId, gearSkillId } = req.body;
     if (!gearId || !gearSkillId) {
-      throw new Error('Inavlid request.')
+      throw new Error("Inavlid request.");
     }
-    const gearCreated = await service.createGearSkillToGearLink(gearId, gearSkillId);
+    const gearCreated = await service.createGearSkillToGearLink(
+      gearId,
+      gearSkillId
+    );
     res.json(gearCreated);
   } catch (error) {
     next(error);

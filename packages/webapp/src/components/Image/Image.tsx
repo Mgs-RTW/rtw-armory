@@ -21,7 +21,6 @@ export function Image({
         fill
         {...rest}
         style={{
-          objectFit: "cover",
           objectPosition: "center center",
           ...style,
         }}

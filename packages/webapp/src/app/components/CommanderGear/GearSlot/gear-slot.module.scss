@@ -1,0 +1,38 @@
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  background: var(--blue-900);
+  border: 2px solid var(--yellow-900);
+  background-size: cover;
+}
+
+.slot[data-slot="hand"][data-state="un-equipped"] {
+  background-image: url("/weapon_placeholder.png");
+}
+.slot[data-slot="armour"][data-state="un-equipped"] {
+  background-image: url("/chest_placeholder.png");
+}
+.slot[data-slot="head"][data-state="un-equipped"] {
+  background-image: url("/helmet_placeholder.png");
+}
+.slot[data-slot="accessory"][data-state="un-equipped"] {
+  background-image: url("/accessory_placeholder.png");
+}
+
+.GearPiece {
+  display: flex;
+  align-items: center;
+  padding: var(--space-50);
+  gap: var(--space-75);
+
+  .image {
+    display: flex;
+    justify-content: flex-start;
+    width: 40px;
+    height: 40px;
+  }
+}
