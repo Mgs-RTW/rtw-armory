@@ -36,6 +36,11 @@ resource "kubernetes_deployment" "webapp" {
             value = "production"
           }
 
+          env {
+            name  = "NEXT_PUBLIC_API_DESTINATION"
+            value = "http://34.88.65.99:8000/:path*"
+          }
+
           resources {
             limits = {
               cpu    = "200m"
@@ -81,5 +86,70 @@ resource "kubernetes_service_v1" "webapp" {
     }
 
     type = "LoadBalancer"
+
   }
 }
+
+resource "kubernetes_ingress_v1" "webapp" {
+  metadata {
+    name = "webapp"
+    annotations = {
+      #"kubernetes.io/ingress.global-static-ip-name" = "35.217.46.166"
+      "networking.gke.io/managed-certificates" : "rtw-armory"
+      #"kubernetes.io/ingress.class" : "gce"
+      "kubernetes.io/ingress.allow-http" : "true"
+    }
+  }
+
+  spec {
+    #ingress_class_name = "nginx"
+    default_backend {
+      service {
+        name = "webapp"
+        port {
+          number = 80
+        }
+      }
+    }
+
+    rule {
+      http {
+
+        path {
+          backend {
+            service {
+              name = "api-service"
+              port {
+                number = 8000
+              }
+            }
+          }
+          path = "/api*"
+
+        }
+        path {
+          backend {
+            service {
+              name = "webapp"
+              port {
+                number = 80
+              }
+            }
+          }
+          path = "/"
+        }
+      }
+
+    }
+  }
+}
+
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "rtw-armory-2"
+
+  managed {
+    domains = ["rtw-armory.fellowoftherings.com"]
+  }
+}
+
+
