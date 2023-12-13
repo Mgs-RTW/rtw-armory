@@ -26,6 +26,10 @@ resource "kubernetes_deployment" "api-service" {
           image = "europe-north1-docker.pkg.dev/rtw-armory/rtw-armory-artifact-registry-prod/api-service:latest"
           name  = "api-service"
 
+          port {
+            container_port = 8000
+          }
+          
           env {
             name  = "PORT"
             value = 8000
@@ -66,7 +70,6 @@ resource "kubernetes_deployment" "api-service" {
             name  = "SESSION_SECRET"
             value = var.session_secret
           }
-
           env {
             name  = "GCS_BUCKET"
             value = "rtw-armory"
@@ -76,7 +79,6 @@ resource "kubernetes_deployment" "api-service" {
             name  = "GCLOUD_PROJECT"
             value = "rtw-armory"
           }
-
           resources {
             limits = {
               cpu    = "200m"
@@ -97,17 +99,26 @@ resource "kubernetes_deployment" "api-service" {
             initial_delay_seconds = 3
             period_seconds        = 3
           }
+
+          readiness_probe {
+            http_get {
+              path = "/health"
+              port = 8000
+            }
+
+            initial_delay_seconds = 3
+            period_seconds        = 3
+          }
         }
       }
     }
   }
-
   lifecycle {
     ignore_changes = [spec[0].template[0].spec[0].container[0].image]
   }
 }
 
-resource "kubernetes_service_v1" "example" {
+resource "kubernetes_service_v1" "api-service" {
   metadata {
     name = "api-service"
   }
@@ -117,7 +128,7 @@ resource "kubernetes_service_v1" "example" {
     }
     session_affinity = "ClientIP"
     port {
-      port        = 80
+      port        = 8000
       target_port = 8000
     }
 

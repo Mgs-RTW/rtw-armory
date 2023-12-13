@@ -8,6 +8,11 @@ import { CommanderGear, CommanderStats } from "./components";
 
 type Side = "good" | "evil";
 
+const dainImage =
+  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702241762182_dain.png";
+const gtgImage =
+  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702242260645_gandalf_gray.png";
+
 export default function Home() {
   const [side, setSide] = useState<Side>("good");
   const { data: commanders } = useCommandersQuery();
@@ -17,6 +22,12 @@ export default function Home() {
     setSide(side);
     document.documentElement.setAttribute("data-side", side);
   };
+
+  let imageToUse = "";
+
+  if (commander !== undefined) {
+    imageToUse = commander.name == "Gandalf the Gray" ? gtgImage : dainImage;
+  }
 
   return (
     <div className={styles.root}>
@@ -33,14 +44,14 @@ export default function Home() {
               onClick={() => setCommander(el)}
               className={styles.CommanderItem}
             >
-              <Image alt={el.name} src={el.image} />
+              <Image alt={el.name} src={el.assets.avatarUrl} />
             </li>
           ))}
         </ul>
       </div>
       {commander && (
         <div className={styles.CharacterImage}>
-          <Image alt="Commander image" src="/gandalf_commander.png" />
+          <Image alt="Commander image" src={commander?.assets.imageUrl} />
         </div>
       )}
       {commander && (

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { createCommander } from "./service";
-import { Commander } from "@lotr-rtw/service-types";
+import { createCommander, createCommanderAsset } from "./service";
+import { Commander, CommanderAssets } from "@lotr-rtw/service-types";
 
 export const create = async (
   req: Request,
@@ -14,6 +14,26 @@ export const create = async (
     }
     const commanderCreated = await createCommander(commander);
     res.json(commanderCreated);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const commanderAsset = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const commanderAsset = req.body as CommanderAssets
+
+    if (!commanderAsset) {
+      throw new Error("No commander sent in request.");
+    }
+
+    const commanderAssetCreated = await createCommanderAsset(commanderAsset);
+    res.json(commanderAssetCreated);
   } catch (error) {
     next(error);
   }

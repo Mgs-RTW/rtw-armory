@@ -1,4 +1,4 @@
-import { Commander, CommanderAttributes } from "@lotr-rtw/service-types";
+import { Commander, CommanderAssets, CommanderAttributes } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
 export async function createCommander(commander: Commander) {
@@ -45,4 +45,23 @@ export async function createCommander(commander: Commander) {
 
   commanderSavedInDb.baseData = attributes;
   return commanderSavedInDb;
+}
+
+
+export async function createCommanderAsset(commanderAsset: CommanderAssets) {
+  const [assetSavedInDb]: [Commander] = await sql`
+    INSERT INTO commander_assets (
+        image_url,
+        avatar_url,
+        commander_id
+    )
+    VALUES (
+        ${commanderAsset.imageUrl}, 
+        ${commanderAsset.avatarUrl},
+        ${commanderAsset.commanderId}
+        )       
+        RETURNING *
+    `;
+
+  return assetSavedInDb
 }

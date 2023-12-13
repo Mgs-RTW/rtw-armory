@@ -29,4 +29,11 @@ export interface Commander extends BaseEntity {
     alignment: CommanderAlignment;
     baseData: CommanderAttributes;
     raceId: string;
+    assets: CommanderAssets
+}
+
+export interface CommanderAssets extends BaseEntity {
+    imageUrl: string;
+    avatarUrl: string;
+    commanderId: string;
 }

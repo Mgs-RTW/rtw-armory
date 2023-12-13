@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import adminRouter from "./admin-api";
 import apiRouter from "./api";
 import {
@@ -14,11 +14,19 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(sessionMiddleware);
 
-app.use(apiRouter);
-app.use("/admin", authMiddleware, requiresRoleMiddleware("admin"), adminRouter);
+app.use((req, res, next) => {
+  const uAgent = req.headers['user-agent'];
+  if (!uAgent?.includes("kube")) {
+    console.log("Request going to ", req.url);
+  }
+  next();
+});
+
+app.use("/api", apiRouter);
+app.use("/api/admin", authMiddleware, requiresRoleMiddleware("admin"), adminRouter);
 
 const availableRoutes = extractAvailableEndpointsFromRouters([
-  { prefix: "/admin", router: adminRouter },
+  { prefix: "/api/admin", router: adminRouter },
   { router: apiRouter },
 ]);
 
@@ -28,9 +36,15 @@ app.get("/health", (req, res) => {
   res.send("Account service is OK");
 });
 
+app.get("/", (req, res) => {
+  res.send("Account service is OK");
+});
+
 app.get("/readiness", (req, res) => {
   res.status(200).send("OK");
 });
+
+
 
 app.use(errorMiddleware);
 
