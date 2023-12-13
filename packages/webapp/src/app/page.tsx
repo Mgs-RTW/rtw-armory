@@ -19,7 +19,9 @@ export default function Home() {
   };
 
   if (commander === undefined && commanders !== undefined) {
-    setCommander(commanders[0]);
+    setTimeout(() => {
+      setCommander(commanders[0]);
+    }, 300);
   }
 
   return (
