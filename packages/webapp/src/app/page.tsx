@@ -18,6 +18,10 @@ export default function Home() {
     document.documentElement.setAttribute("data-side", side);
   };
 
+  if (commander === undefined && commanders !== undefined) {
+    setCommander(commanders[0]);
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
@@ -40,7 +44,7 @@ export default function Home() {
       </div>
       {commander && (
         <div className={styles.CharacterImage}>
-          <Image alt="Commander image" src="/gandalf_commander.png" />
+          <Image alt="Commander image" src={commander.image} />
         </div>
       )}
       {commander && (
