@@ -2,7 +2,7 @@ name: Build, push and deploy webapp
 
 on:
   push:
-    branches: ["main", "feature/ssl-cert-webapp"]
+    branches: ["main"]
 
 env:
   PROJECT_ID: rtw-armory
