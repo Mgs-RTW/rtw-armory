@@ -3,9 +3,13 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  padding: 0 var(--space-100);
   gap: var(--space-25);
   color: var(--yellow-primary);
+  background: var(--blue-900);
+}
+
+.FullWidth {
+  width: 100%;
 }
 
 .SelectTrigger[data-placeholder] {

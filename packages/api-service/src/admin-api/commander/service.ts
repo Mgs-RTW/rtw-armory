@@ -1,26 +1,34 @@
-import { Commander, CommanderAssets, CommanderAttributes } from "@lotr-rtw/service-types";
+import {
+  ApiBaseCommander,
+  ApiCommander,
+  ApiCommanderAssets,
+  ApiCommanderAttributes,
+  CommanderAssets,
+  CreateCommanderBody,
+} from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
-export async function createCommander(commander: Commander) {
-  const [commanderSavedInDb]: [Commander] = await sql`
-    INSERT INTO commander (
+export async function createCommander(
+  payload: CreateCommanderBody,
+  assetsPayload: CommanderAssets
+): Promise<ApiCommander> {
+  const [baseCommander, attributes, assets] = await sql.begin(async (sql) => {
+    const [baseCommander]: [ApiBaseCommander] = await sql`
+      INSERT INTO commander (
         name,
-        image,
         tier,
         alignment,
         race_id
-    )
-    VALUES (
-        ${commander.name}, 
-        ${commander.image},
-        ${commander.tier.toString().toLowerCase()},
-        ${commander.alignment.toString().toLowerCase()},
-        ${commander.raceId}
-        ) RETURNING *
+      ) VALUES (
+        ${payload.name},
+        ${payload.tier},
+        ${payload.alignment},
+        ${payload.raceId}        
+      ) RETURNING *
     `;
 
-  const baseData = commander.baseData;
-  const [attributes]: [CommanderAttributes] = await sql`
+    const { baseData } = payload;
+    const [attributes]: [ApiCommanderAttributes] = await sql`
     INSERT INTO commander_attributes (
         min_damage,
         max_damage,
@@ -39,29 +47,29 @@ export async function createCommander(commander: Commander) {
         ${baseData.attack},
         ${baseData.defense},
         ${baseData.initiative},
-        ${commanderSavedInDb.id}
+        ${baseCommander.id}
         ) RETURNING *
     `;
 
-  commanderSavedInDb.baseData = attributes;
-  return commanderSavedInDb;
-}
-
-
-export async function createCommanderAsset(commanderAsset: CommanderAssets) {
-  const [assetSavedInDb]: [Commander] = await sql`
-    INSERT INTO commander_assets (
-        image_url,
-        avatar_url,
-        commander_id
-    )
-    VALUES (
-        ${commanderAsset.imageUrl}, 
-        ${commanderAsset.avatarUrl},
-        ${commanderAsset.commanderId}
-        )       
-        RETURNING *
+    const [commanderAssets]: [ApiCommanderAssets] = await sql`
+      INSERT INTO commander_assets (
+          image_url,
+          avatar_url,
+          commander_id
+      )
+      VALUES (
+        ${assetsPayload.imageUrl}, 
+        ${assetsPayload.avatarUrl},
+        ${baseCommander.id}
+      ) RETURNING *
     `;
 
-  return assetSavedInDb
+    return [baseCommander, attributes, commanderAssets];
+  });
+
+  return {
+    ...baseCommander,
+    assets,
+    baseData: attributes,
+  };
 }
