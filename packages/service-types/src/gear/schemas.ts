@@ -1,0 +1,16 @@
+import { z } from "zod";
+
+export const createGearAttributesSchema = z.object({
+  target: z.enum(["unit", "commander"]),
+  modifier: z.enum(["attack", "focus", "defense"]),
+  amount: z.number(),
+});
+
+export const createGearSchema = z.object({
+  raceIds: z.array(z.string().uuid()),
+  name: z.string(),
+  description: z.string(),
+  slot: z.enum(["head", "hand", "armour", "accessory", "relic"]),
+  rarity: z.enum(["flawless", "exquisite", "superior", "fine", "unique"]),
+  attributes: z.array(createGearAttributesSchema),
+});

@@ -1,24 +1,6 @@
 import { Gear, GearAttribute, GearSkill } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
-export async function getGear() {
-  const gear = await sql<Gear[]>`
-    SELECT 
-    g.id, 
-    name, 
-    image, 
-    description, 
-    slot, 
-    rarity,
-    race_id,
-    json_agg(ga) as attributes
-    FROM gear g
-    LEFT JOIN gear_attribute ga ON ga.gear_id = g.id
-    GROUP BY g.id;
-    `;
-  return gear;
-}
-
 export async function createGear(gear: Gear) {
   const [gearSavedInDb]: [Gear] = await sql`
     INSERT INTO gear (

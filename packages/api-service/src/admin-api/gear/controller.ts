@@ -2,19 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import * as service from "./service";
 import { Gear, GearSkill } from "@lotr-rtw/service-types";
 
-export const getGear = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const gear = await service.getGear();
-    res.json(gear);
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const createGear = async (
   req: Request,
   res: Response,

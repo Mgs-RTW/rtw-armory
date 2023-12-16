@@ -23,8 +23,6 @@ export default function Home() {
     document.documentElement.setAttribute("data-side", side);
   };
 
-  console.log(commander);
-
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
