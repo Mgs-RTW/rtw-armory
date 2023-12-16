@@ -38,8 +38,19 @@
     outline: none;
 
     form {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-50);
+
       * {
         width: 100%;
+      }
+
+      button[type="submit"] {
+        width: max-content;
+        padding: var(--space-50);
+        background: var(--blue-900);
       }
     }
   }

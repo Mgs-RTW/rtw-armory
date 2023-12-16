@@ -23,11 +23,7 @@ export default function Home() {
     document.documentElement.setAttribute("data-side", side);
   };
 
-  let imageToUse = "";
-
-  if (commander !== undefined) {
-    imageToUse = commander.name == "Gandalf the Gray" ? gtgImage : dainImage;
-  }
+  console.log(commander);
 
   return (
     <div className={styles.root}>
