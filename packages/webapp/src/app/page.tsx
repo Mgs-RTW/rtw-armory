@@ -44,14 +44,14 @@ export default function Home() {
               onClick={() => setCommander(el)}
               className={styles.CommanderItem}
             >
-              <Image alt={el.name} src={el.assets.avatarUrl} />
+              <Image alt={el.name} src={el.assets?.avatarUrl} />
             </li>
           ))}
         </ul>
       </div>
       {commander && (
         <div className={styles.CharacterImage}>
-          <Image alt="Commander image" src={commander?.assets.imageUrl} />
+          <Image alt="Commander image" src={commander?.assets?.imageUrl} />
         </div>
       )}
       {commander && (

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ZodError } from "zod";
 import {
   isAuthenticationError,
   isAuthorizationError,
@@ -15,6 +16,9 @@ export const errorMiddleware = (
   if (res.headersSent) {
     return next(error);
   }
+  if (error instanceof ZodError) {
+    return res.status(400).json({ message: error.toString() });
+  }
   if (isAuthenticationError(error)) {
     return res.status(401).json({ message: "Authentication required" });
   }
@@ -24,5 +28,5 @@ export const errorMiddleware = (
   if (isInvalidCredentialsError(error)) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
-  return res.status(500).json({ message: "Internal server error" });
+  return res.status(500).json({ message: (error as Error).message });
 };

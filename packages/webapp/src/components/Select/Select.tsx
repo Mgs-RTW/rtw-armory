@@ -1,28 +1,37 @@
-// your-select.jsx
 import React, { ForwardedRef, ReactNode } from "react";
+import clsx from "clsx";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { CheckIcon } from "@radix-ui/react-icons";
 import styles from "./select.module.scss";
 
-interface Props extends SelectPrimitive.SelectProps {
-  trigger: ReactNode;
+export interface SelectProps extends SelectPrimitive.SelectProps {
+  trigger?: ReactNode;
   search?: ReactNode;
+  fullWidth?: boolean;
+  triggerHeight?: number;
 }
 
 // eslint-disable-next-line react/display-name
 export const Select = React.forwardRef(
   (
-    { children, trigger, search, ...props }: Props,
+    {
+      children,
+      trigger,
+      search,
+      fullWidth,
+      triggerHeight = 0,
+      ...props
+    }: SelectProps,
     forwardedRef: ForwardedRef<HTMLButtonElement>
   ) => {
     return (
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           ref={forwardedRef}
-          className={styles.SelectTrigger}
-          asChild
+          style={{ height: triggerHeight }}
+          className={clsx(styles.SelectTrigger, fullWidth && styles.FullWidth)}
+          asChild={!!trigger}
         >
-          <span>{trigger}</span>
+          {trigger ? <span>{trigger}</span> : null}
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
           <SelectPrimitive.Content

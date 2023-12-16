@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { createCommander, createCommanderAsset } from "./service";
-import { Commander, CommanderAssets } from "@lotr-rtw/service-types";
+import { createCommander } from "./service";
+import { createCommanderSchema } from "@lotr-rtw/service-types";
+import { uploadFile } from "../../util";
 
 export const create = async (
   req: Request,
@@ -8,32 +9,27 @@ export const create = async (
   next: NextFunction
 ) => {
   try {
-    const commander = req.body as Commander;
-    if (!commander) {
-      throw new Error("No commander sent in request.");
+    const commander = createCommanderSchema.parse(req.body);
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const [image] = files.image;
+    const [avatar] = files.avatar;
+
+    console.log(avatar);
+
+    if (!image || !avatar) {
+      throw new Error("Missing image or avatar for commander");
     }
-    const commanderCreated = await createCommander(commander);
+
+    const [imageFile, avatarFile] = await Promise.all([
+      uploadFile({ area: "commander", file: image }),
+      uploadFile({ area: "commander", file: avatar }),
+    ]);
+
+    const commanderCreated = await createCommander(commander, {
+      avatarUrl: avatarFile.url,
+      imageUrl: imageFile.url,
+    });
     res.json(commanderCreated);
-  } catch (error) {
-    next(error);
-  }
-};
-
-
-export const commanderAsset = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const commanderAsset = req.body as CommanderAssets
-
-    if (!commanderAsset) {
-      throw new Error("No commander sent in request.");
-    }
-
-    const commanderAssetCreated = await createCommanderAsset(commanderAsset);
-    res.json(commanderAssetCreated);
   } catch (error) {
     next(error);
   }

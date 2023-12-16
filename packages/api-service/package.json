@@ -20,12 +20,14 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.7.0",
     "argon2": "^0.31.2",
     "connect-pg-simple": "^9.0.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "multer": "^1.4.5-lts.1",
     "multer-cloud-storage": "^3.1.0",
-    "postgres": "^3.4.3"
+    "postgres": "^3.4.3",
+    "zod": "^3.22.4"
   }
 }
