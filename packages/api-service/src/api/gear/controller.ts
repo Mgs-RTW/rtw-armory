@@ -9,7 +9,8 @@ export const getGearBySlot = async (
 ) => {
   try {
     const slot = req.params.slot as GearSlot;
-    const gear = await service.getGearBySlot(slot);
+    const raceId = req.params.raceId as string;
+    const gear = await service.getGearBySlot(raceId, slot);
     res.json(gear);
   } catch (error) {
     next(error);

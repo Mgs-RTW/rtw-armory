@@ -11,11 +11,10 @@ interface Props {
 }
 
 export const GearSlot = ({ slot }: Props) => {
-  const { data } = useGearBySlotQuery(slot);
   const [commander] = useCommanderStore();
+  const { data } = useGearBySlotQuery(commander!.raceId, slot);
   const graph = useCommanderGearStore((state) => state.graph);
   const equip = useCommanderGearStore((state) => state.equip);
-  const unEquip = useCommanderGearStore((state) => state.unEquip);
   const equipped = graph[commander!.id][slot];
 
   const handleValueChange = (gearId: string) => {
@@ -29,6 +28,7 @@ export const GearSlot = ({ slot }: Props) => {
     <Select
       value={equipped?.id}
       onValueChange={handleValueChange}
+      showValue={false}
       trigger={
         <>
           <div

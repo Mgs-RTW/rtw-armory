@@ -5,11 +5,10 @@ export async function getAllCommanders() {
   const commanders = await sql<ApiCommander[]>`
           SELECT 
           c.id, 
-          c.name, 
-          image, 
+          c.name,
           tier, 
           alignment, 
-          cr.id as raceId,
+          cr.id as "raceId",
           to_json(ca) as "baseData",
           to_json(cass) as "assets"
           FROM commander c 

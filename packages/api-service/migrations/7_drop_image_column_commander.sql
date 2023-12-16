@@ -1,0 +1,1 @@
+ALTER TABLE commander DROP COLUMN image;

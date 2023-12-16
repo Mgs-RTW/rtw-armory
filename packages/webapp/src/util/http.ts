@@ -31,13 +31,12 @@ export class HttpClient {
     body?: unknown
   ): Promise<T> => {
     const { abort, signal } = new AbortController();
+    const headers = this.getHeaders(body);
 
     const request = new Request(`${this.baseUrl}${path}`, {
       method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+      headers,
+      body: body instanceof FormData ? body : JSON.stringify(body),
       signal,
     });
 
@@ -86,6 +85,16 @@ export class HttpClient {
         detail: { returnUrl: location.pathname },
       })
     );
+  };
+
+  private getHeaders = (body?: unknown) => {
+    const headers = new Headers();
+
+    if (body instanceof FormData) {
+      return headers;
+    }
+    headers.append("Content-Type", "application/json");
+    return headers;
   };
 }
 

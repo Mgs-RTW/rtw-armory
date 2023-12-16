@@ -8,6 +8,7 @@ export interface SelectProps extends SelectPrimitive.SelectProps {
   search?: ReactNode;
   fullWidth?: boolean;
   triggerHeight?: number;
+  showValue?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -19,6 +20,7 @@ export const Select = React.forwardRef(
       search,
       fullWidth,
       triggerHeight = 0,
+      showValue = true,
       ...props
     }: SelectProps,
     forwardedRef: ForwardedRef<HTMLButtonElement>
@@ -31,7 +33,10 @@ export const Select = React.forwardRef(
           className={clsx(styles.SelectTrigger, fullWidth && styles.FullWidth)}
           asChild={!!trigger}
         >
-          {trigger ? <span>{trigger}</span> : null}
+          <span>
+            {showValue && <SelectPrimitive.Value />}
+            {trigger}
+          </span>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
           <SelectPrimitive.Content

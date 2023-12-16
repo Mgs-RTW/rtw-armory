@@ -44,6 +44,8 @@ input {
   border: none;
   font-size: 14px;
   padding: 8px 12px;
+  background: var(--blue-900);
+  color: var(--yellow-500);
 }
 
 h1,
