@@ -1,6 +1,5 @@
 import {
   ApiBaseGear,
-  ApiGear,
   CreateGearBody,
   GearSkill,
 } from "@lotr-rtw/service-types";

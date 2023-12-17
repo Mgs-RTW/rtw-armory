@@ -24,16 +24,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post(
-  "/api/test",
-  multerMiddleware.fields([
-    { name: "assets.imageUrl" },
-    { name: "assets.avatarUrl" },
-  ]),
-  (req, res) => {
-    console.log(req.files);
-  }
-);
 app.use("/api", apiRouter);
 app.use(
   "/api/admin",
