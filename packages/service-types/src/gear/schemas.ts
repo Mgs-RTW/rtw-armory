@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createGearAttributesSchema = z.object({
   target: z.enum(["unit", "commander"]),
   modifier: z.enum(["attack", "focus", "defense"]),
-  amount: z.number(),
+  amount: z.string(),
 });
 
 export const createGearSchema = z.object({

@@ -1,52 +1,46 @@
-import { Gear, GearAttribute, GearSkill } from "@lotr-rtw/service-types";
+import {
+  ApiBaseGear,
+  ApiGear,
+  CreateGearBody,
+  GearSkill,
+} from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
-export async function createGear(gear: Gear) {
-  const [gearSavedInDb]: [Gear] = await sql`
-    INSERT INTO gear (
+export async function createGear(payload: CreateGearBody, imageUrl: string) {
+  const [baseGear] = await sql.begin(async (sql) => {
+    const [baseGear]: [ApiBaseGear] = await sql`
+      INSERT INTO gear (
         name,
-        image,
         description,
+        image,
         slot,
-        rarity,
-        race_id
-    )
-    VALUES (
-        ${gear.name}, 
-        ${gear.image},
-        ${gear.description},
-        ${gear.slot},
-        ${gear.rarity},
-        ${gear.raceId}
-        ) RETURNING *
+        rarity
+      ) VALUES (
+        ${payload.name},
+        ${payload.description},
+        ${imageUrl},
+        ${payload.slot},
+        ${payload.rarity}
+      ) RETURNING *
     `;
 
-  if (gear.attributes && gear.attributes.length > 0) {
-    gearSavedInDb.attributes = [];
-    for (const attribute of gear.attributes) {
-      const [gearAttribute]: [GearAttribute] = await sql`
-            INSERT INTO gear_attribute (
-                target,
-                modifier,
-                amount,
-                gear_id
-            )
-            VALUES (
-                ${attribute.target}, 
-                ${attribute.modifier},
-                ${attribute.amount},
-                ${gearSavedInDb.id}
-                ) RETURNING *
-            `;
-      gearSavedInDb.attributes.push(gearAttribute);
-    }
-  }
+    const raceGear = payload.raceIds.map((raceId) => ({
+      raceId,
+      gearId: baseGear.id,
+    }));
 
-  return gearSavedInDb;
+    await sql`
+      INSERT INTO race_gear ${sql(raceGear)}
+    `;
+
+    return [baseGear];
+  });
+
+  return baseGear;
 }
 
 export async function getGearSkills() {
-  const gear = await sql<Gear[]>`
+  const gear = await sql<ApiGear[]>`
     SELECT 
         name,
         target,
