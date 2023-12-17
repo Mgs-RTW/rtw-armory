@@ -10,6 +10,7 @@ export type GearSlot = CreateGearBody["slot"];
 
 export type ApiGearAttributes = BaseEntity & CreateGearAttributesBody;
 export type ApiBaseGear = BaseEntity & Omit<CreateGearBody, "attributes">;
+
 export type ApiGear = ApiBaseGear & {
   attributes: ApiGearAttributes;
   image: string;

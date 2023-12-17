@@ -12,5 +12,4 @@ export const createGearSchema = z.object({
   description: z.string(),
   slot: z.enum(["head", "hand", "armour", "accessory", "relic"]),
   rarity: z.enum(["flawless", "exquisite", "superior", "fine", "unique"]),
-  attributes: z.array(createGearAttributesSchema),
 });

@@ -4,7 +4,6 @@ import apiRouter from "./api";
 import {
   authMiddleware,
   errorMiddleware,
-  multerMiddleware,
   requiresRoleMiddleware,
   sessionMiddleware,
 } from "./middlewares";
