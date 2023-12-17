@@ -1,10 +1,9 @@
-name: Build, push and deploy webapp
+name: PR webapp
 
 on:
-  push:
-    paths:
-      - packages/webapp/**
-    branches: ["main"]
+  pull_request:
+    branches:
+      - main
 
 env:
   PROJECT_ID: rtw-armory
@@ -16,7 +15,7 @@ env:
   NODE_ENV: production
 
 jobs:
-  build-push-artifact:
+  pr-webapp:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -47,18 +46,3 @@ jobs:
         run: |-
           docker build . -t ${{ env.GAR_LOCATION }}/webapp:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
           docker build . -t ${{ env.GAR_LOCATION }}/webapp:latest -f ${{ env.DOCKERFILE_LOCATION }}
-
-      - name: Push image
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}/webapp:$(git rev-parse --short HEAD)
-          docker push ${{ env.GAR_LOCATION }}/webapp:latest
-
-      - id: "get-credentials"
-        uses: "google-github-actions/get-gke-credentials@v1"
-        with:
-          cluster_name: "${{ env.GKE_CLUSTER }}"
-          location: "${{ env.GKE_ZONE }}"
-
-      - name: Deploy
-        run: |-
-          kubectl set image deployment/webapp webapp=${{ env.GAR_LOCATION }}/webapp:$(git rev-parse --short HEAD)
