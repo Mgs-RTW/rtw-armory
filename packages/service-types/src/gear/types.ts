@@ -12,6 +12,7 @@ export type ApiGearAttributes = BaseEntity & CreateGearAttributesBody;
 export type ApiBaseGear = BaseEntity & Omit<CreateGearBody, "attributes">;
 export type ApiGear = ApiBaseGear & {
   attributes: ApiGearAttributes;
+  image: string;
 };
 
 // TODO: Extract from schema
