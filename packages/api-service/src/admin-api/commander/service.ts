@@ -28,6 +28,7 @@ export async function createCommander(
     `;
 
     const { baseData } = payload;
+    //@ts-ignore
     const [attributes]: [ApiCommanderAttributes] = await sql`
     INSERT INTO commander_attributes (
         min_damage,
