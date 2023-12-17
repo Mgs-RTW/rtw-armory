@@ -25,6 +25,7 @@ export const create = async (
       uploadFile({ area: "commander", file: avatar }),
     ]);
 
+    //@ts-ignore
     const commanderCreated = await createCommander(commander, {
       avatarUrl: avatarFile.url,
       imageUrl: imageFile.url,
