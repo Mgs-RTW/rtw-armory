@@ -1,19 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+import { createGearSchema, GearSkill } from "@lotr-rtw/service-types";
 import * as service from "./service";
-import { Gear, GearSkill } from "@lotr-rtw/service-types";
-
-export const getGear = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const gear = await service.getGear();
-    res.json(gear);
-  } catch (error) {
-    next(error);
-  }
-};
+import { uploadFile } from "../../util";
 
 export const createGear = async (
   req: Request,
@@ -21,11 +9,12 @@ export const createGear = async (
   next: NextFunction
 ) => {
   try {
-    const gear = req.body as Gear;
-    if (!gear) {
-      throw new Error("No gear sent in request.");
+    const gear = createGearSchema.parse(req.body);
+    if (!req.file) {
+      throw new Error("Gear image missing in payload");
     }
-    const gearCreated = await service.createGear(gear);
+    const { url } = await uploadFile({ area: "gear", file: req.file });
+    const gearCreated = await service.createGear(gear, url);
     res.json(gearCreated);
   } catch (error) {
     next(error);

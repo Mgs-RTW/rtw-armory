@@ -1,43 +1,20 @@
+import { z } from "zod";
 import { BaseEntity } from "../base";
+import { createGearAttributesSchema, createGearSchema } from "./schemas";
 
-enum GearAttributeTarget {
-  Unit,
-  Commander,
-}
+export type CreateGearAttributesBody = Required<
+  z.infer<typeof createGearAttributesSchema>
+>;
+export type CreateGearBody = Required<z.infer<typeof createGearSchema>>;
+export type GearSlot = CreateGearBody["slot"];
 
-enum GearAttributeModifier {
-  Attack,
-  Focus,
-  Defense,
-}
+export type ApiGearAttributes = BaseEntity & CreateGearAttributesBody;
+export type ApiBaseGear = BaseEntity & Omit<CreateGearBody, "attributes">;
+export type ApiGear = ApiBaseGear & {
+  attributes: ApiGearAttributes;
+};
 
-enum GearRarity {
-  FlawLess = 1,
-  Exquisite = 2,
-  Superior = 3,
-  Fine = 4,
-  Unique = 5,
-}
-
-export type GearSlot = "head" | "hand" | "armour" | "accessory" | "relic";
-
-export interface Gear extends BaseEntity {
-  name: string;
-  image: string;
-  description: string;
-  attributes: GearAttribute[];
-  slot: GearSlot;
-  rarity: GearRarity;
-  raceId: string;
-}
-
-export interface GearAttribute extends BaseEntity {
-  target: GearAttributeTarget;
-  modifier: GearAttributeModifier;
-  amount: number;
-  gearId: string;
-}
-
+// TODO: Extract from schema
 export interface GearAdjustment extends BaseEntity {
   strengths: number;
   refinements: number;
@@ -46,8 +23,8 @@ export interface GearAdjustment extends BaseEntity {
 
 export interface GearSkill extends BaseEntity {
   name: string;
-  target: GearAttributeTarget;
-  modifier: GearAttributeModifier;
+  target: CreateGearAttributesBody["target"];
+  modifier: CreateGearAttributesBody["modifier"];
   minAmount: number;
   maxAmount: number;
 }

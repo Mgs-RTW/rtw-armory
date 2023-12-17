@@ -1,8 +1,8 @@
-import { Gear, GearSlot } from "@lotr-rtw/service-types";
+import { ApiGear, GearSlot } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
 export async function getGearBySlot(raceId: string, slot: GearSlot) {
-  const gear = await sql<Gear[]>`
+  const gear = await sql<ApiGear[]>`
     SELECT 
     g.id, 
     name, 
