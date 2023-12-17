@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lotr-rtw/service-types": "*",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-tabs": "^1.0.4",
@@ -22,7 +23,6 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@lotr-rtw/service-types": "*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
