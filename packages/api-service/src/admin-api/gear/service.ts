@@ -7,7 +7,7 @@ import { sql } from "../../db";
 
 export async function createGear(payload: CreateGearBody, imageUrl: string) {
   const [baseGear] = await sql.begin(async (sql) => {
-    const [baseGear]: [ApiBaseGear] = await sql`
+    const [gear]: [ApiBaseGear] = await sql`
       INSERT INTO gear (
         name,
         description,
@@ -25,14 +25,14 @@ export async function createGear(payload: CreateGearBody, imageUrl: string) {
 
     const raceGear = payload.raceIds.map((raceId) => ({
       raceId,
-      gearId: baseGear.id,
+      gearId: gear.id,
     }));
 
     await sql`
       INSERT INTO race_gear ${sql(raceGear)}
     `;
 
-    return [baseGear];
+    return [gear];
   });
 
   return baseGear;
