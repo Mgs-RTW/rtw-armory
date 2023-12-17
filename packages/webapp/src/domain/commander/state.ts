@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { useShallow } from "zustand/react/shallow";
-import { ApiCommander, Gear, GearSlot } from "@lotr-rtw/service-types";
+import { ApiCommander, ApiGear, GearSlot } from "@lotr-rtw/service-types";
 
-type CommanderGearGraph = Record<string, Record<GearSlot, Gear | undefined>>;
+type CommanderGearGraph = Record<string, Record<GearSlot, ApiGear | undefined>>;
 
 interface CommanderGearStore {
   prepare: (commanders: ApiCommander[]) => void;
-  equip: (commanderId: string, gear: Gear) => void;
+  equip: (commanderId: string, gear: ApiGear) => void;
   unEquip: (commanderId: string, slot: GearSlot) => void;
-  graph: Record<string, Record<GearSlot, Gear | undefined>>;
+  graph: Record<string, Record<GearSlot, ApiGear | undefined>>;
 }
 
 export const useCommanderGearStore = create<CommanderGearStore>((set) => ({
