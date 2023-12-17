@@ -40,7 +40,7 @@ export async function createGear(payload: CreateGearBody, imageUrl: string) {
 }
 
 export async function getGearSkills() {
-  const gear = await sql<ApiGear[]>`
+  const gear = await sql<GearSkill[]>`
     SELECT 
         name,
         target,

@@ -5,6 +5,5 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*.ts", "@types/*"],
-  "exclude": ["node_modules/**/*"],
-  "references": [{ "path": "../service-types" }]
+  "exclude": ["node_modules/**/*"]
 }
