@@ -1,11 +1,10 @@
-name: Build, push and deploy api-service
+name: PR api-service
 
 on:
-  push:
-    paths:
-    - packages/api-service/**
-    branches: ["main"]
-    
+  pull_request:
+    branches:
+      - main
+  
 env:
   PROJECT_ID: rtw-armory
   REGION: europe-north1
@@ -16,7 +15,7 @@ env:
   NODE_ENV: production
 
 jobs:
-  build-push-artifact:
+  pr-api:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -47,18 +46,3 @@ jobs:
         run: |-
           docker build . -t ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
           docker build . -t ${{ env.GAR_LOCATION }}/api-service:latest -f ${{ env.DOCKERFILE_LOCATION }}
-
-      - name: Push image
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)
-          docker push ${{ env.GAR_LOCATION }}/api-service:latest
-
-      - id: "get-credentials"
-        uses: "google-github-actions/get-gke-credentials@v1"
-        with:
-          cluster_name: "${{ env.GKE_CLUSTER }}"
-          location: "${{ env.GKE_ZONE }}"
-        # Deploy the Docker image to the GKE cluster
-      - name: Deploy
-        run: |-
-          kubectl set image deployment/api-service api-service=${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)

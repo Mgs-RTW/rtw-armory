@@ -117,12 +117,9 @@ resource "kubernetes_ingress_v1" "webapp" {
         }
       }
     }
-    #curl -v --insecure https://rtw-armory.fellowoftherings.com
 
     rule {
-      #host = "rtw-armory.fellowoftherings.com"
       http {
-
         path {
           backend {
             service {
