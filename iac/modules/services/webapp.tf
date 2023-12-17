@@ -90,19 +90,25 @@ resource "kubernetes_service_v1" "webapp" {
   }
 }
 
+resource "google_compute_global_address" "static" {
+  name         = "global-static-ip-rtw-armory"
+  address_type = "EXTERNAL"
+}
+
 resource "kubernetes_ingress_v1" "webapp" {
   metadata {
     name = "webapp"
     annotations = {
-      #"kubernetes.io/ingress.global-static-ip-name" = "35.217.46.166"
-      "networking.gke.io/managed-certificates" : "rtw-armory"
-      #"kubernetes.io/ingress.class" : "gce"
-      "kubernetes.io/ingress.allow-http" : "true"
+      "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.static.name
+      "kubernetes.io/ingress.class" : "gce"
+      "kubernetes.io/ingress.allow-http" : "false"
+      "cert-manager.io/issuer" : "letsencrypt-production"
     }
   }
 
   spec {
-    #ingress_class_name = "nginx"
+
+
     default_backend {
       service {
         name = "webapp"
@@ -111,8 +117,10 @@ resource "kubernetes_ingress_v1" "webapp" {
         }
       }
     }
+    #curl -v --insecure https://rtw-armory.fellowoftherings.com
 
     rule {
+      #host = "rtw-armory.fellowoftherings.com"
       http {
 
         path {
@@ -124,7 +132,7 @@ resource "kubernetes_ingress_v1" "webapp" {
               }
             }
           }
-          path = "/api*"
+          path = "/api"
 
         }
         path {
@@ -141,14 +149,10 @@ resource "kubernetes_ingress_v1" "webapp" {
       }
 
     }
-  }
-}
-
-resource "google_compute_managed_ssl_certificate" "default" {
-  name = "rtw-armory-2"
-
-  managed {
-    domains = ["rtw-armory.fellowoftherings.com"]
+    tls {
+      secret_name = "web-ssl"
+      hosts       = ["rtw-armory.fellowoftherings.com"]
+    }
   }
 }
 
