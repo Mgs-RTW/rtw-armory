@@ -2,8 +2,8 @@ name: Build, push and deploy webapp
 
 on:
   push:
-    paths:
-      - packages/webapp/**
+    # paths:
+    #   - packages/webapp/**
     branches: ["main", "hotfix/gcr"]
 
 env:
