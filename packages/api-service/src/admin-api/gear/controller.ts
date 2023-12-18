@@ -1,9 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  CreateGearBody,
-  createGearSchema,
-  GearSkill,
-} from "@lotr-rtw/service-types";
+import { createGearSchema, GearSkill } from "@lotr-rtw/service-types";
 import * as service from "./service";
 import { uploadFile } from "../../util";
 
@@ -13,7 +9,7 @@ export const createGear = async (
   next: NextFunction
 ) => {
   try {
-    const gear = createGearSchema.parse(req.body) as CreateGearBody;
+    const gear = createGearSchema.parse(req.body);
     if (!req.file) {
       throw new Error("Gear image missing in payload");
     }
