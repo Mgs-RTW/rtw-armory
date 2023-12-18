@@ -3,16 +3,14 @@ name: Build, push and deploy api-service
 on:
   push:
     paths:
-    - packages/api-service/**
+      - packages/api-service/**
     branches: ["main"]
-    
+
 env:
   PROJECT_ID: rtw-armory
-  REGION: europe-north1
-  GAR_LOCATION: europe-north1-docker.pkg.dev/rtw-armory/rtw-armory-artifact-registry-prod
+  REGION: us-central1
+  GAR_LOCATION: us-central1-docker.pkg.dev/rtw-armory/rtw-armory/api-service
   DOCKERFILE_LOCATION: packages/api-service/Dockerfile
-  GKE_CLUSTER: rtw-armory
-  GKE_ZONE: europe-north1-b
   NODE_ENV: production
 
 jobs:
@@ -45,20 +43,16 @@ jobs:
 
       - name: Build image
         run: |-
-          docker build . -t ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
-          docker build . -t ${{ env.GAR_LOCATION }}/api-service:latest -f ${{ env.DOCKERFILE_LOCATION }}
+          docker build . -t ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
+          docker build . -t ${{ env.GAR_LOCATION }}:latest -f ${{ env.DOCKERFILE_LOCATION }}
 
       - name: Push image
         run: |-
-          docker push ${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)
-          docker push ${{ env.GAR_LOCATION }}/api-service:latest
+          docker push ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD)
+          docker push ${{ env.GAR_LOCATION }}:latest
 
-      - id: "get-credentials"
-        uses: "google-github-actions/get-gke-credentials@v1"
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v2"
         with:
-          cluster_name: "${{ env.GKE_CLUSTER }}"
-          location: "${{ env.GKE_ZONE }}"
-        # Deploy the Docker image to the GKE cluster
-      - name: Deploy
-        run: |-
-          kubectl set image deployment/api-service api-service=${{ env.GAR_LOCATION }}/api-service:$(git rev-parse --short HEAD)
+          service: "api-service"
+          image: ${{ env.GAR_LOCATION }}:latest
