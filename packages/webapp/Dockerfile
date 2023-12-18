@@ -7,7 +7,7 @@ COPY yarn.lock .
 COPY tsconfig.json .
 COPY ./packages/service-types/package.json packages/service-types/
 COPY ./packages/webapp/package.json packages/webapp/
-RUN yarn workspace @lotr-rtw/webapp install --focus
+RUN yarn workspace @lotr-rtw/webapp install --frozen-lockfile
 COPY ./packages/service-types packages/service-types/
 COPY ./packages/webapp packages/webapp/
 RUN yarn workspace @lotr-rtw/webapp build
