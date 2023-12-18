@@ -9,10 +9,10 @@ import {
   sessionMiddleware,
 } from "./middlewares";
 import { extractAvailableEndpointsFromRouters } from "./util/express";
-import { corsOptions } from "./util/get-cors-options";
+import { corsMiddleware } from "./middlewares/cors-middleware";
 
 const app = express();
-app.use(cors({ credentials: true }));
+app.use(corsMiddleware);
 app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
