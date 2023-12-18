@@ -18,14 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 
-app.use((req, res, next) => {
-  const uAgent = req.headers["user-agent"];
-  if (!uAgent?.includes("kube")) {
-    console.log("Request going to ", req.url);
-  }
-  next();
-});
-
 app.use("/api", apiRouter);
 app.use(
   "/api/admin",

@@ -1,7 +1,13 @@
 {
   "name": "lotr-rtw",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/service-types",
+      "packages/api-service",
+      "packages/webapp"
+    ]
+  },
+  "packageManager": "yarn@3.5.0",
+  "version": "3.5.0"
 }

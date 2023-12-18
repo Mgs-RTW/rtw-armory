@@ -2,19 +2,15 @@
 FROM node:20-alpine as build
 
 WORKDIR /base
-
 COPY package.json .
-COPY package-lock.json .
+COPY yarn.lock .
 COPY tsconfig.json .
-
 COPY ./packages/service-types/package.json packages/service-types/
 COPY ./packages/webapp/package.json packages/webapp/
-RUN npm -w @lotr-rtw/service-types ci
-RUN npm -w @lotr-rtw/webapp ci
+RUN yarn workspace @lotr-rtw/webapp install --frozen-lockfile
 COPY ./packages/service-types packages/service-types/
 COPY ./packages/webapp packages/webapp/
-RUN npm -w @lotr-rtw/service-types run build
-RUN npm -w @lotr-rtw/webapp run build
+RUN yarn workspace @lotr-rtw/webapp build
 
 # Run
 FROM nginx:alpine
