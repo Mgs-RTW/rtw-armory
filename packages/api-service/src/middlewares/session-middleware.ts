@@ -22,7 +22,7 @@ export const sessionMiddleware = session({
   cookie: {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 30,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
   },
 });
