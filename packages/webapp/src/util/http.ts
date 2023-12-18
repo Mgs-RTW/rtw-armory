@@ -38,6 +38,7 @@ export class HttpClient {
       headers,
       body: body instanceof FormData ? body : JSON.stringify(body),
       signal,
+      credentials: "include",
     });
 
     const promise = fetch(request)
@@ -98,4 +99,7 @@ export class HttpClient {
   };
 }
 
-export const client = new HttpClient("/api");
+export const client = new HttpClient(
+  process.env.NEXT_PUBLIC_API_DESTINATION ??
+    "https://api-service-ehe4ffvi7q-uc.a.run.app/api"
+);
