@@ -66,8 +66,8 @@ export class HttpClient {
     if (!response.ok) {
       return this.isJsonResponse(response)
         ? response
-            .json()
-            .then((body) => Promise.reject(new ApiError(response, body)))
+          .json()
+          .then((body) => Promise.reject(new ApiError(response, body)))
         : Promise.reject(response);
     }
     return response;
@@ -98,4 +98,5 @@ export class HttpClient {
   };
 }
 
-export const client = new HttpClient("/api");
+export const client = new HttpClient(process.env.NEXT_PUBLIC_API_DESTINATION ??
+  "https://api-service-ehe4ffvi7q-uc.a.run.app/api");
