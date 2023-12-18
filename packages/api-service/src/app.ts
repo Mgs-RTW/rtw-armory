@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cors"
+import cors from "cors";
 import adminRouter from "./admin-api";
 import apiRouter from "./api";
 import {
@@ -9,10 +9,10 @@ import {
   sessionMiddleware,
 } from "./middlewares";
 import { extractAvailableEndpointsFromRouters } from "./util/express";
-import { corsOptions } from './util/get-cors-options';
+import { corsOptions } from "./util/get-cors-options";
 
 const app = express();
-app.use(cors(corsOptions()))
+app.use(cors({ credentials: true }));
 app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,5 +48,3 @@ app.get("/readiness", (req, res) => {
 app.use(errorMiddleware);
 
 export default app;
-
-
