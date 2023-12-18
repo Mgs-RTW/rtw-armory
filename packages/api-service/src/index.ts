@@ -6,6 +6,9 @@ const port = Number(process.env.PORT) || 8000;
 runDatabaseMigrations()
   .then(() => {
     const server = app.listen(port, () => {
+      console.log(
+        `Api service running in environment: ${process.env.NODE_ENV}`
+      );
       console.log(`api-service running on ${port}`);
     });
 
