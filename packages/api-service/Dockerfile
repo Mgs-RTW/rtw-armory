@@ -1,17 +1,15 @@
 FROM node:20-alpine as build
 
 WORKDIR /base
-
 COPY package.json .
-COPY package-lock.json .
+COPY yarn.lock .
 COPY tsconfig.json .
-
 COPY ./packages/service-types/package.json packages/service-types/
 COPY ./packages/api-service/package.json packages/api-service/
-RUN npm -w @lotr-rtw/api-service ci
+RUN yarn workspace @lotr-rtw/api-service install --frozen-lockfile
 COPY ./packages/service-types packages/service-types/
 COPY ./packages/api-service packages/api-service/
-RUN npm -w @lotr-rtw/api-service run build
+RUN yarn workspace @lotr-rtw/api-service build
 
 FROM node:20-alpine
 RUN apk --no-cache add curl
