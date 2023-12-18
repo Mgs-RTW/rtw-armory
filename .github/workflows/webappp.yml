@@ -28,31 +28,31 @@ jobs:
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
 
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
+      # - name: "Use gcloud CLI"
+      #   run: "gcloud info"
 
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+      # - name: "Docker auth"
+      #   run: |-
+      #     gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      - name: "copy"
-        run: |-
-          touch packages/webapp/.env.local
-          echo "NEXT_PUBLIC_API_DESTINATION=http://34.88.65.99:8000/:path*" >> packages/webapp/.env.local
-          echo "NEXT_BUILD_ID=2" >> packages/webapp/.env.local
-          echo "BUILD_ID=2" >> packages/webapp/.env.local
-      - name: Build image
-        run: |-
-          docker build . -t ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
-          docker build . -t ${{ env.GAR_LOCATION }}:latest -f ${{ env.DOCKERFILE_LOCATION }}
+      # - name: "copy"
+      #   run: |-
+      #     touch packages/webapp/.env.local
+      #     echo "NEXT_PUBLIC_API_DESTINATION=http://34.88.65.99:8000/:path*" >> packages/webapp/.env.local
+      #     echo "NEXT_BUILD_ID=2" >> packages/webapp/.env.local
+      #     echo "BUILD_ID=2" >> packages/webapp/.env.local
+      # - name: Build image
+      #   run: |-
+      #     docker build . -t ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD) -f ${{ env.DOCKERFILE_LOCATION }}
+      #     docker build . -t ${{ env.GAR_LOCATION }}:latest -f ${{ env.DOCKERFILE_LOCATION }}
 
-      - name: Push image
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD)
-          docker push ${{ env.GAR_LOCATION }}:latest
+      # - name: Push image
+      #   run: |-
+      #     docker push ${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD)
+      #     docker push ${{ env.GAR_LOCATION }}:latest
 
       - id: "deploy"
         uses: "google-github-actions/deploy-cloudrun@v2"
         with:
           service: "webapp"
-          image: "${{ env.GAR_LOCATION }}:$(git rev-parse --short HEAD)"
+          image: "us-central1-docker.pkg.dev/rtw-armory/rtw-armory/webapp:latest"
