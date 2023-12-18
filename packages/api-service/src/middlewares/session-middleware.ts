@@ -23,6 +23,6 @@ export const sessionMiddleware = session({
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 30,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "none",
   },
 });
