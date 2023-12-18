@@ -9,7 +9,7 @@ on:
 env:
   PROJECT_ID: rtw-armory
   REGION: europe-north1
-  GAR_LOCATION: gcr.io/rtw-armory/github.com/mgs-rtw/rtw-armory-webapp
+  GAR_LOCATION: us-central1-docker.pkg.dev/rtw-armory/rtw-armory/webapp
   DOCKERFILE_LOCATION: packages/webapp/Dockerfile
   NODE_ENV: production
 
