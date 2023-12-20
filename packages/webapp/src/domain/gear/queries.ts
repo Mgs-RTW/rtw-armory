@@ -1,7 +1,7 @@
 import { GearSlot } from "@lotr-rtw/service-types";
 import { useQuery } from "react-query";
 import { fetchGearBySlot } from "./api";
-import { gearQueryKey } from "./keys";
+import { gearBySlotQueryKey } from "./keys";
 
 export function useGearBySlotQuery(
   raceId: string,
@@ -9,7 +9,7 @@ export function useGearBySlotQuery(
   enabled = true
 ) {
   return useQuery(
-    [gearQueryKey, raceId, slot],
+    [gearBySlotQueryKey(raceId, slot)],
     () => fetchGearBySlot(raceId, slot),
     {
       enabled,

@@ -13,6 +13,7 @@ export const RaceDropdown = ({ value, onRaceSelect, ...rest }: Props) => {
       value={value}
       onValueChange={onRaceSelect}
       triggerHeight={40}
+      placeholder="Select race"
       {...rest}
     >
       {data.map((race) => (
