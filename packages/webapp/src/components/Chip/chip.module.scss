@@ -1,5 +1,6 @@
 .root {
   display: flex;
+  flex: 1;
   align-items: center;
   white-space: normal;
   padding: 0 var(--space-50);
@@ -7,13 +8,12 @@
   border-radius: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
   background: var(--yellow-primary);
   color: var(--blue-900);
   gap: var(--space-50);
 
   .close {
-    width: 20px;
+    min-width: 20px;
     height: 20px;
     border-radius: 50%;
     display: flex;

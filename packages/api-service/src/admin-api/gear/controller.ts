@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { createGearSchema, GearSkill } from "@lotr-rtw/service-types";
+import {
+  ApiBaseGear,
+  createGearSchema,
+  GearSkill,
+} from "@lotr-rtw/service-types";
 import * as service from "./service";
 import { uploadFile } from "../../util";
 
 export const createGear = async (
   req: Request,
-  res: Response,
+  res: Response<ApiBaseGear>,
   next: NextFunction
 ) => {
   try {
@@ -15,7 +19,7 @@ export const createGear = async (
     }
     const { url } = await uploadFile({ area: "gear", file: req.file });
     const gearCreated = await service.createGear(gear, url);
-    res.json(gearCreated);
+    res.json({ ...gearCreated });
   } catch (error) {
     next(error);
   }
