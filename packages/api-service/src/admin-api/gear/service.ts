@@ -5,7 +5,10 @@ import {
 } from "@lotr-rtw/service-types";
 import { sql } from "../../db";
 
-export async function createGear(payload: CreateGearBody, imageUrl: string) {
+export async function createGear(
+  payload: CreateGearBody,
+  imageUrl: string
+): Promise<ApiBaseGear> {
   const [baseGear] = await sql.begin(async (sql) => {
     const [gear]: [ApiBaseGear] = await sql`
       INSERT INTO gear (
@@ -23,6 +26,15 @@ export async function createGear(payload: CreateGearBody, imageUrl: string) {
       ) RETURNING *
     `;
 
+    const gearAttributes = payload.attributes.map((attr) => ({
+      ...attr,
+      gearId: gear.id,
+    }));
+
+    await sql`
+      INSERT INTO gear_attribute ${sql(gearAttributes)}
+    `;
+
     const raceGear = payload.raceIds.map((raceId) => ({
       raceId,
       gearId: gear.id,
@@ -35,7 +47,7 @@ export async function createGear(payload: CreateGearBody, imageUrl: string) {
     return [gear];
   });
 
-  return baseGear;
+  return { ...baseGear, raceIds: payload.raceIds };
 }
 
 export async function getGearSkills() {

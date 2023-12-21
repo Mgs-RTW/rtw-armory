@@ -4,6 +4,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { client } from "@/util";
 import styles from "./page.module.scss";
 import { CommanderForm } from "./tabs/CommanderForm";
+import { CreateGearForm } from "./tabs/GearForm";
 
 const Null = () => null;
 
@@ -14,7 +15,7 @@ const tabs = [
   },
   {
     label: "Gear",
-    component: <Null />,
+    component: <CreateGearForm />,
   },
 ];
 

@@ -5,11 +5,12 @@ import { createGearAttributesSchema, createGearSchema } from "./schemas";
 export type CreateGearAttributesBody = Required<
   z.infer<typeof createGearAttributesSchema>
 >;
-export type CreateGearBody = Required<z.infer<typeof createGearSchema>>;
+export type CreateGearBody = z.infer<typeof createGearSchema>;
 export type GearSlot = CreateGearBody["slot"];
 
 export type ApiGearAttributes = BaseEntity & CreateGearAttributesBody;
-export type ApiBaseGear = BaseEntity & Omit<CreateGearBody, "attributes">;
+export type ApiBaseGear = BaseEntity &
+  Omit<CreateGearBody, "attributes"> & { image: string };
 
 export type ApiGear = ApiBaseGear & {
   attributes: ApiGearAttributes;

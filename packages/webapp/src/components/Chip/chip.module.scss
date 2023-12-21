@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  white-space: normal;
+  padding: 0 var(--space-50);
+  min-height: 32px;
+  border-radius: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--yellow-primary);
+  color: var(--blue-900);
+  gap: var(--space-50);
+
+  .close {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--yellow-800);
+    color: var(--yellow-500);
+
+    &:hover {
+      background: var(--yellow-900);
+      cursor: pointer;
+    }
+  }
+}

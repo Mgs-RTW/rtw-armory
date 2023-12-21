@@ -28,7 +28,6 @@ export const GearSlot = ({ slot }: Props) => {
     <Select
       value={equipped?.id}
       onValueChange={handleValueChange}
-      showValue={false}
       trigger={
         <>
           <div

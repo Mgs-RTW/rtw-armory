@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  CreateGearBody,
+  ApiBaseGear,
   createGearSchema,
   GearSkill,
 } from "@lotr-rtw/service-types";
@@ -9,17 +9,17 @@ import { uploadFile } from "../../util";
 
 export const createGear = async (
   req: Request,
-  res: Response,
+  res: Response<ApiBaseGear>,
   next: NextFunction
 ) => {
   try {
-    const gear = createGearSchema.parse(req.body) as CreateGearBody;
+    const gear = createGearSchema.parse(req.body);
     if (!req.file) {
       throw new Error("Gear image missing in payload");
     }
     const { url } = await uploadFile({ area: "gear", file: req.file });
     const gearCreated = await service.createGear(gear, url);
-    res.json(gearCreated);
+    res.json({ ...gearCreated });
   } catch (error) {
     next(error);
   }
