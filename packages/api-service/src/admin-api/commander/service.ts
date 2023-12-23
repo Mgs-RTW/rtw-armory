@@ -28,7 +28,6 @@ export async function createCommander(
     `;
 
     const { baseData } = payload;
-    //@ts-ignore
     const [attributes]: [ApiCommanderAttributes] = await sql`
     INSERT INTO commander_attributes (
         min_damage,
@@ -38,7 +37,8 @@ export async function createCommander(
         attack,
         defense,
         initiative,
-        commander_id
+        commander_id,
+        attack_scale_per_level
     ) 
     VALUES (
         ${baseData.minDamage}, 
@@ -48,7 +48,8 @@ export async function createCommander(
         ${baseData.attack},
         ${baseData.defense},
         ${baseData.initiative},
-        ${baseCommander.id}
+        ${baseCommander.id},
+        ${baseData.attackScalePerLevel}
         ) RETURNING *
     `;
 

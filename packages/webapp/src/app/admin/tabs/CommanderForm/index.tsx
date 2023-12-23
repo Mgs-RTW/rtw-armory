@@ -2,6 +2,7 @@
 import { FormEvent } from "react";
 import { RaceDropdown } from "@/components";
 import { useCreateCommanderMutation } from "@/domain/commander";
+import styles from "./commander-form.module.scss";
 
 export const CommanderForm = () => {
   const { mutateAsync, error } = useCreateCommanderMutation();
@@ -33,7 +34,13 @@ export const CommanderForm = () => {
       <input name="baseData.maxDamage" placeholder="Maximum damage" />
       <input name="baseData.hp" placeholder="Commander HP" />
       <input name="baseData.command" placeholder="Command damage" />
-      <input name="baseData.attack" placeholder="Attack damage" />
+      <div className={styles.ScaleFields}>
+        <input name="baseData.attack" placeholder="Attack damage" />
+        <input
+          name="baseData.attackScalePerLevel"
+          placeholder="Attack scale per level"
+        />
+      </div>
       <input name="baseData.defense" placeholder="Commander defense" />
       <input name="baseData.focus" placeholder="Focus" />
       <input name="baseData.initiative" placeholder="Initiative" />

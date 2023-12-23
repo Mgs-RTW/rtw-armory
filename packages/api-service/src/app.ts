@@ -27,7 +27,7 @@ app.use(
 
 const availableRoutes = extractAvailableEndpointsFromRouters([
   { prefix: "/api/admin", router: adminRouter },
-  { router: apiRouter },
+  { prefix: "/api", router: apiRouter },
 ]);
 
 console.log("Available routes", availableRoutes);
