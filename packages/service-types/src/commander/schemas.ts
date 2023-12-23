@@ -9,6 +9,7 @@ export const createCommanderAttributesSchema = z.object({
   defense: z.string(),
   focus: z.string(),
   initiative: z.string(),
+  attackScalePerLevel: z.string(),
 });
 
 export const createCommanderSchema = z.object({
