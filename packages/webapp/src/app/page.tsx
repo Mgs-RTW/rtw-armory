@@ -8,11 +8,6 @@ import { CommanderGear, CommanderStats } from "./components";
 
 type Side = "good" | "evil";
 
-const dainImage =
-  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702241762182_dain.png";
-const gtgImage =
-  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702242260645_gandalf_gray.png";
-
 export default function Home() {
   const [side, setSide] = useState<Side>("good");
   const { data: commanders } = useCommandersQuery();

@@ -3,15 +3,13 @@ import { useEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { client } from "@/util";
 import styles from "./page.module.scss";
-import { CommanderForm } from "./tabs/CommanderForm";
 import { CreateGearForm } from "./tabs/GearForm";
-
-const Null = () => null;
+import { Commander } from "./tabs/Commander";
 
 const tabs = [
   {
     label: "Commander",
-    component: <CommanderForm />,
+    component: <Commander />,
   },
   {
     label: "Gear",
