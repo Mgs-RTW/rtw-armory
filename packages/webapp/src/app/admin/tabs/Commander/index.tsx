@@ -6,6 +6,10 @@ import {
 } from "@/domain/commander";
 import { ApiCommander } from "@lotr-rtw/service-types";
 import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { DeleteCommanderModal } from "@/app/components/Commander/DeleteCommanderModal/DeleteCommanderModal";
+import { Avatar } from "@/app/components/Avatar/Avatar";
+import { Table } from "@/app/components/Table/Table";
 
 enum Mode {
   List,
@@ -66,35 +70,59 @@ export const Commander = () => {
 
   const handleDelete = (data: ApiCommander) => {};
 
-  switch (mode) {
-    case Mode.List:
-      return (
-        <div className="table hover striped">
-          <DataGrid
-            caller={"commander"}
-            height={800}
-            columns={columns}
-            data={commanders!}
-            loadEditForm={handleEdit}
-            loadCreateForm={handleCreate}
-            deleteRow={handleDelete}
-          />
-        </div>
-      );
-    case Mode.Edit:
-      return (
-        <CommanderForm
-          commander={commander!}
-          submit={handleSubmit}
-          cancel={handleCancel}
-        ></CommanderForm>
-      );
-    case Mode.Create:
-      return (
-        <CommanderForm          
-          submit={handleSubmit}
-          cancel={handleCancel}
-        ></CommanderForm>
-      );
-  }
+  return (
+    <Table columns={["", "Name"]}>
+      {commanders.map((commander) => (
+        <tr key={commander.id}>
+          <td>
+            <Avatar src={commander.assets.avatarUrl} />
+          </td>
+          <td>
+            <Link href={`/admin/commander?id=${commander.id}`}>
+              {commander.name}
+            </Link>
+          </td>
+          <td>
+            <DeleteCommanderModal
+              commanderName={commander.name}
+              commanderId={commander.id}
+            />
+          </td>
+        </tr>
+      ))}
+    </Table>
+  );
 };
+
+// switch (mode) {
+//   case Mode.List:
+//     return (
+//       <div className="table hover striped">
+//         <DataGrid
+//           caller={"commander"}
+//           height={800}
+//           columns={columns}
+//           data={commanders!}
+//           loadEditForm={handleEdit}
+//           loadCreateForm={handleCreate}
+//           deleteRow={handleDelete}
+//         />
+//       </div>
+//     );
+//   case Mode.Edit:
+//     return (
+//       <CommanderForm
+//         commander={commander!}
+//         submit={handleSubmit}
+//         cancel={handleCancel}
+//       ></CommanderForm>
+//     );
+//   case Mode.Create:
+//     return (
+//       <CommanderForm
+//         submit={handleSubmit}
+//         cancel={handleCancel}
+//       ></CommanderForm>
+//     );
+// }
+// };
