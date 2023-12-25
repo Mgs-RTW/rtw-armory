@@ -1,5 +1,5 @@
 "use client";
-import { CommanderForm } from "@/app/components/Commander/CommanderForm";
+import { CommanderForm } from "@/app/admin/components/Commander/CommanderForm";
 import { useCommanderQuery } from "@/domain/commander";
 import { useCreateCommanderMutation } from "@/domain/commander";
 import { useSearchParams } from "next/navigation";

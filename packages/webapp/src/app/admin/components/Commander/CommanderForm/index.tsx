@@ -1,15 +1,14 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { RaceDropdown, Image } from "@/components";
 import {
   ApiCommander,
   CommanderAssets,
   CreateCommanderBody,
 } from "@lotr-rtw/service-types";
-import { MdArrowBack } from "react-icons/md";
+import { Image, RaceDropdown } from "@/components";
+import { buildFormData, setValueAtPath } from "@/util";
 import styles from "./commander-form.module.scss";
-import { setValueAtPath } from "@/util/object";
-import { buildFormData } from "@/util/form";
+import { MdArrowBack } from "react-icons/md";
 
 type CommanderBody = CreateCommanderBody & {
   assets: CommanderAssets;
@@ -45,13 +44,13 @@ const emptyCommander: CommanderBody = {
 interface CommanderFormProps {
   commander?: ApiCommander;
   onSubmit: (data: FormData, assets?: CreateCommanderAssets) => void;
-  cancel: () => void;
+  onCancel: () => void;
 }
 
 export const CommanderForm = ({
   commander,
   onSubmit,
-  cancel,
+  onCancel,
 }: CommanderFormProps) => {
   const [formValues, setFormValues] = useState<CommanderBody>(
     commander ?? emptyCommander
@@ -201,7 +200,7 @@ export const CommanderForm = ({
         <button type="submit">Create commander</button>
       </form>
       <MdArrowBack
-        onClick={cancel}
+        onClick={onCancel}
         className={styles.cancel}
         color="green"
       ></MdArrowBack>
