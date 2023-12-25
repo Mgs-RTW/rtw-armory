@@ -34,7 +34,7 @@ export const Select = React.forwardRef(
           className={clsx(styles.SelectTrigger, fullWidth && styles.FullWidth)}
           asChild={!!trigger}
         >
-          <span>
+          <span className={styles.SelectInput}>
             {trigger ? (
               trigger
             ) : (
