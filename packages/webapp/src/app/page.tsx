@@ -5,6 +5,7 @@ import styles from "./page.module.scss";
 import { useCommandersQuery, useCommanderStore } from "@/domain/commander";
 import { Image } from "@/components";
 import { CommanderGear, CommanderStats } from "./components";
+import { Avatar } from "./components/Avatar/Avatar";
 
 type Side = "good" | "evil";
 
@@ -33,7 +34,7 @@ export default function Home() {
               onClick={() => setCommander(el)}
               className={styles.CommanderItem}
             >
-              <Image alt={el.name} src={el.assets?.avatarUrl} />
+              <Avatar alt={el.name} src={el.assets?.avatarUrl} />
             </li>
           ))}
         </ul>

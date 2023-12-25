@@ -3,7 +3,7 @@ import { FormEvent } from "react";
 import { RaceDropdown } from "@/components";
 import { ApiCommander, CreateCommanderBody } from "@lotr-rtw/service-types";
 import { MdArrowBack } from "react-icons/md";
-import styles from "./index.module.scss";
+import styles from "./commander-form.module.scss";
 
 interface Props {
   commander?: ApiCommander;
@@ -12,8 +12,6 @@ interface Props {
 }
 
 export const CommanderForm = (props: Props) => {
- const emptyCommander: CreateCommanderBody = {...};
-
   return (
     <>
       <form onSubmit={props.submit}>
@@ -28,7 +26,13 @@ export const CommanderForm = (props: Props) => {
         <input name="baseData.maxDamage" placeholder="Maximum damage" />
         <input name="baseData.hp" placeholder="Commander HP" />
         <input name="baseData.command" placeholder="Command damage" />
-        <input name="baseData.attack" placeholder="Attack damage" />
+        <div className={styles.ScaleFields}>
+          <input name="baseData.attack" placeholder="Attack damage" />
+          <input
+            name="baseData.attackScalePerLevel"
+            placeholder="Attack scale per level"
+          />
+        </div>
         <input name="baseData.defense" placeholder="Commander defense" />
         <input name="baseData.focus" placeholder="Focus" />
         <input name="baseData.initiative" placeholder="Initiative" />

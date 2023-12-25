@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createCommander } from "./service";
-import {
-  CreateCommanderBody,
-  createCommanderSchema,
-} from "@lotr-rtw/service-types";
+import { createCommanderSchema } from "@lotr-rtw/service-types";
 import { uploadFile } from "../../util";
 
 export const create = async (
@@ -12,9 +9,7 @@ export const create = async (
   next: NextFunction
 ) => {
   try {
-    const commander = createCommanderSchema.parse(
-      req.body
-    ) as CreateCommanderBody;
+    const commander = createCommanderSchema.parse(req.body);
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const [image] = files.image;
     const [avatar] = files.avatar;

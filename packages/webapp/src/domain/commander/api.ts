@@ -8,3 +8,7 @@ export function fetchCommanders() {
 export function createCommander(payload: FormData) {
   return client.post<ApiCommander>("/admin/commander", payload);
 }
+
+export function getCommanderById(id: string | null) {
+  return client.get<ApiCommander>(`/commanders/${id}`)
+}

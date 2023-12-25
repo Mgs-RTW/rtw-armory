@@ -1,10 +1,11 @@
 interface Props {
   columns: string[];
   children: JSX.Element[];
+  className: string;
 }
 
-export const Table = ({ columns, children }: Props) => (
-  <table>
+export const Table = ({ columns, children, className }: Props) => (
+  <table className={className}>
     <thead>
       <tr>
         {columns.map((col) => (
