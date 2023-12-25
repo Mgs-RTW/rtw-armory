@@ -1,10 +1,14 @@
 "use client";
-import { CommanderForm } from "@/app/admin/components/Commander/CommanderForm";
+import {
+  CommanderForm,
+  CreateCommanderAssets,
+} from "@/app/admin/components/Commander/CommanderForm";
 import { useCommanderQuery } from "@/domain/commander";
 import { useCreateCommanderMutation } from "@/domain/commander";
 import { useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { ApiCommander } from "@lotr-rtw/service-types";
 
 export default function Commander() {
   const params = useSearchParams();
@@ -13,9 +17,11 @@ export default function Commander() {
   const { data: commander } = useCommanderQuery(commanderId);
   const { mutateAsync, error } = useCreateCommanderMutation();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const body = Object.fromEntries(new FormData(e.currentTarget));
+  const handleSubmit = (
+    formdata: FormData,
+    assets: CreateCommanderAssets | undefined
+  ) => {
+    const body = Object.fromEntries(formdata);
 
     const transformed = Object.entries(body).reduce((acc, [key, value]) => {
       if (key.includes(".")) {
@@ -32,9 +38,9 @@ export default function Commander() {
 
   return (
     <CommanderForm
-      submit={handleSubmit}
+      onSubmit={handleSubmit}
       commander={commander}
-      cancel={() => router.push("/admin")}
+      onCancel={() => router.push("/admin")}
     />
   );
 }

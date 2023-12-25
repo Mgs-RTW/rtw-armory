@@ -14,7 +14,7 @@ type CommanderBody = CreateCommanderBody & {
   assets: CommanderAssets;
 };
 
-interface CreateCommanderAssets {
+export interface CreateCommanderAssets {
   image: File | undefined;
   avatar: File | undefined;
 }
@@ -41,7 +41,7 @@ const emptyCommander: CommanderBody = {
   },
 };
 
-interface CommanderFormProps {
+export interface CommanderFormProps {
   commander?: ApiCommander;
   onSubmit: (data: FormData, assets?: CreateCommanderAssets) => void;
   onCancel: () => void;
