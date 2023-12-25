@@ -3,6 +3,8 @@ import { produce } from "immer";
 import { useShallow } from "zustand/react/shallow";
 import { ApiCommander, ApiGear, GearSlot } from "@lotr-rtw/service-types";
 
+const COMMANDER_MAX_LEVEL = 50;
+
 type CommanderGearGraph = Record<string, Record<GearSlot, ApiGear | undefined>>;
 
 interface CommanderGearStore {
@@ -44,6 +46,19 @@ export const useCommanderGearStore = create<CommanderGearStore>((set) => ({
       })
     ),
 }));
+
+export const useCommanderAttackDamage = () => {
+  const [commander] = useCommanderStore();
+
+  if (!commander) {
+    return 0;
+  }
+
+  return (
+    Number(commander.baseData.attack) +
+    Number(commander.baseData.attackScalePerLevel) * COMMANDER_MAX_LEVEL
+  );
+};
 
 interface CommanderStore {
   commander: ApiCommander | undefined;
