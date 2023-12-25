@@ -5,13 +5,9 @@ import styles from "./page.module.scss";
 import { useCommandersQuery, useCommanderStore } from "@/domain/commander";
 import { Image } from "@/components";
 import { CommanderGear, CommanderStats } from "./components";
+import { Avatar } from "./components/Avatar/Avatar";
 
 type Side = "good" | "evil";
-
-const dainImage =
-  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702241762182_dain.png";
-const gtgImage =
-  "https://storage.googleapis.com/rtw-armory/application-uploads/commander/1702242260645_gandalf_gray.png";
 
 export default function Home() {
   const [side, setSide] = useState<Side>("good");
@@ -38,7 +34,7 @@ export default function Home() {
               onClick={() => setCommander(el)}
               className={styles.CommanderItem}
             >
-              <Image alt={el.name} src={el.assets?.avatarUrl} />
+              <Avatar alt={el.name} src={el.assets?.avatarUrl} />
             </li>
           ))}
         </ul>

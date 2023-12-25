@@ -1,0 +1,13 @@
+.ScaleFields {
+  display: flex;
+  align-items: center;
+  gap: var(--space-50);
+}
+
+
+.cancel {
+  position: fixed;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+}

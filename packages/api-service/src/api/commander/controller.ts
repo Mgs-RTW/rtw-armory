@@ -13,3 +13,19 @@ export async function getCommanders(
     next(error);
   }
 }
+
+export async function getCommanderById(req: Request,
+  res: Response,
+  next: NextFunction) {
+  try {
+    const commanderId = req.params.id;
+    const commander = await service.getCommanderById(commanderId);
+    if (!commander) {
+      throw new Error(`Commander with id ${commanderId} not found.`)
+    }
+
+    res.json(commander);
+  } catch (error) {
+    next(error);
+  }
+}

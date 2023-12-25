@@ -1,3 +1,3 @@
 export * from "./BaseLayout/BaseLayout";
-export * from "./CommanderStats/CommanderStats";
+export * from "./Commander/CommanderStats/CommanderStats";
 export * from "./CommanderGear/CommanderGear";
