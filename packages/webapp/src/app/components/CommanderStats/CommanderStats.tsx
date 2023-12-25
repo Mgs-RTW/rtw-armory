@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import { ApiCommander } from "@lotr-rtw/service-types";
 import styles from "./commander-stats.module.scss";
+import { useCommanderAttackDamage } from "@/domain/commander";
 
 interface Props {
   commander: ApiCommander;
@@ -10,6 +11,8 @@ interface Props {
 
 export const CommanderStats = ({ commander }: Props) => {
   const { name, baseData } = commander;
+  const attackDamage = useCommanderAttackDamage();
+  console.log(attackDamage);
 
   return (
     <div className={styles.root}>
@@ -26,7 +29,7 @@ export const CommanderStats = ({ commander }: Props) => {
         <Stat label="HP" value={baseData.hp} />
         <Stat label="Command" value={baseData.command} />
         <li>
-          <p>{baseData.attack}</p>
+          <p>{attackDamage}</p>
           <p>{baseData.defense}</p>
           <p>{baseData.focus}</p>
           <p>{baseData.initiative}</p>

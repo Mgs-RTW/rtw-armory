@@ -1,53 +1,195 @@
 "use client";
-import { FormEvent } from "react";
-import { RaceDropdown } from "@/components";
-import { useCreateCommanderMutation } from "@/domain/commander";
+import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ApiCommander,
+  CommanderAssets,
+  CreateCommanderBody,
+} from "@lotr-rtw/service-types";
+import { Image, RaceDropdown } from "@/components";
+import { buildFormData, setValueAtPath } from "@/util";
 import styles from "./commander-form.module.scss";
 
-export const CommanderForm = () => {
-  const { mutateAsync, error } = useCreateCommanderMutation();
+type CommanderBody = CreateCommanderBody & {
+  assets: CommanderAssets;
+};
+
+interface CreateCommanderAssets {
+  image: File | undefined;
+  avatar: File | undefined;
+}
+
+const emptyCommander: CommanderBody = {
+  name: "",
+  alignment: "good",
+  raceId: "",
+  tier: "t3",
+  baseData: {
+    attack: "",
+    attackScalePerLevel: "",
+    command: "",
+    defense: "",
+    focus: "",
+    hp: "",
+    initiative: "",
+    maxDamage: "",
+    minDamage: "",
+  },
+  assets: {
+    avatarUrl: "",
+    imageUrl: "",
+  },
+};
+
+interface CommanderFormProps {
+  commander?: ApiCommander;
+  onSubmit: (data: FormData, assets?: CreateCommanderAssets) => void;
+}
+
+export const CommanderForm = ({ commander, onSubmit }: CommanderFormProps) => {
+  const [formValues, setFormValues] = useState<CommanderBody>(
+    commander ?? emptyCommander
+  );
+  const [assets, setAssets] = useState<CreateCommanderAssets>({
+    image: undefined,
+    avatar: undefined,
+  });
+
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const nextState = setValueAtPath(target.name, target.value, formValues);
+    setFormValues(nextState);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = Object.fromEntries(new FormData(e.currentTarget));
+    const formData = buildFormData(formValues);
+    onSubmit(formData, assets);
+  };
 
-    const transformed = Object.entries(body).reduce((acc, [key, value]) => {
-      if (key.includes(".")) {
-        const [head, tail] = key.split(".");
-        acc.append(`${head}[${tail}]`, value);
-      } else {
-        acc.append(key, value);
-      }
-      return acc;
-    }, new FormData());
-
-    mutateAsync(transformed).then(console.log).catch(console.error);
+  const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const file = target.files?.[0];
+    setAssets((curr) => ({ ...curr, [target.name]: file }));
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <RaceDropdown name="raceId" fullWidth />
-      <input name="name" placeholder="Commander name" />
-      <input name="tier" placeholder="Commander tier (t1, t2, t3)" />
-      <input name="alignment" placeholder="Commander alignment (evil, good)" />
-      <input name="baseData.minDamage" placeholder="Minimum damage" />
-      <input name="baseData.maxDamage" placeholder="Maximum damage" />
-      <input name="baseData.hp" placeholder="Commander HP" />
-      <input name="baseData.command" placeholder="Command damage" />
+      <RaceDropdown
+        name="raceId"
+        value={formValues.raceId}
+        onValueChange={(value) =>
+          setFormValues((curr) => ({ ...curr, raceId: value }))
+        }
+        fullWidth
+      />
+      <input
+        name="name"
+        value={formValues.name}
+        placeholder="Commander name"
+        onChange={handleChange}
+      />
+      <input
+        name="tier"
+        value={formValues.tier}
+        placeholder="Commander tier (t1, t2, t3)"
+        onChange={handleChange}
+      />
+      <input
+        name="alignment"
+        value={formValues.alignment}
+        placeholder="Commander alignment (evil, good)"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.minDamage"
+        value={formValues.baseData.minDamage}
+        placeholder="Minimum damage"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.maxDamage"
+        value={formValues.baseData.maxDamage}
+        placeholder="Maximum damage"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.hp"
+        value={formValues.baseData.hp}
+        placeholder="Commander HP"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.command"
+        value={formValues.baseData.command}
+        placeholder="Command damage"
+        onChange={handleChange}
+      />
       <div className={styles.ScaleFields}>
-        <input name="baseData.attack" placeholder="Attack damage" />
+        <input
+          name="baseData.attack"
+          value={formValues.baseData.attack}
+          placeholder="Attack damage"
+          onChange={handleChange}
+        />
         <input
           name="baseData.attackScalePerLevel"
+          value={formValues.baseData.attackScalePerLevel}
           placeholder="Attack scale per level"
+          onChange={handleChange}
         />
       </div>
-      <input name="baseData.defense" placeholder="Commander defense" />
-      <input name="baseData.focus" placeholder="Focus" />
-      <input name="baseData.initiative" placeholder="Initiative" />
-      <label htmlFor="image">Commander big image</label>
-      <input type="file" name="image" placeholder="Commander image" />
-      <label htmlFor="avatar">Commander avatar</label>
-      <input type="file" name="avatar" placeholder="Commander avatar" />
+      <input
+        name="baseData.defense"
+        value={formValues.baseData.defense}
+        placeholder="Commander defense"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.focus"
+        value={formValues.baseData.focus}
+        placeholder="Focus"
+        onChange={handleChange}
+      />
+      <input
+        name="baseData.initiative"
+        value={formValues.baseData.initiative}
+        placeholder="Initiative"
+        onChange={handleChange}
+      />
+      {formValues.assets.imageUrl ? (
+        <Image
+          alt="Commander image"
+          src={formValues.assets.imageUrl}
+          style={{ objectFit: "contain" }}
+          className={styles.image}
+        />
+      ) : (
+        <>
+          <label htmlFor="image">Commander big image</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            name="image"
+            placeholder="Commander image"
+          />
+        </>
+      )}
+      {formValues.assets.avatarUrl ? (
+        <Image
+          alt="Commander avatar"
+          src={formValues.assets.avatarUrl}
+          style={{ objectFit: "contain" }}
+          className={styles.avatar}
+        />
+      ) : (
+        <>
+          <label htmlFor="image">Commander avatar</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            name="avatar"
+            placeholder="Commander avatar"
+          />
+        </>
+      )}
       <button type="submit">Create commander</button>
     </form>
   );
