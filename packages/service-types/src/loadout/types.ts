@@ -1,11 +1,21 @@
 import { z } from "zod";
 import { BaseEntity } from "../base";
-import { createLoadoutSchema } from "./schemas";
+import { createLoadoutGearSchema, createLoadoutSchema } from "./schemas";
 
 export type CreateLoadoutSchema = z.infer<typeof createLoadoutSchema>;
 
-export type ApiBaseLoadout = BaseEntity &
-  Omit<CreateLoadoutSchema, "attributes">;
+export type ApiLoadout = BaseEntity &
+  CreateLoadoutSchema;
 
-export type ApiLoadout = ApiBaseLoadout & {
-};
+export type ApiLoadoutGear = BaseEntity & z.infer<typeof createLoadoutGearSchema>
+
+export type ApiLoadoutGearSkill = BaseEntity & {
+  loadOutGearId: string,
+  gearSkillId: string
+}
+
+export type ApiLoadoutGearAdjustment = BaseEntity & {
+  gearId: string,
+  strengths: string,
+  refinements: string
+}

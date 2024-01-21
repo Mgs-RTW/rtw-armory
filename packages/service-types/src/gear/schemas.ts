@@ -6,10 +6,7 @@ export const createGearAttributesSchema = z.object({
   amount: z.string(),
 });
 
-export const createGearAdjustmentSchema = z.object({
-  strengths: z.string(),
-  refinements: z.string(),
-});
+
 
 export const gearSkillSchema = z.object({
   name: z.string(),
