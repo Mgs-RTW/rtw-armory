@@ -4,6 +4,16 @@
   gap: var(--space-50);
 }
 
+.image {
+  width: 200px;
+  height: 100px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
 
 .cancel {
   position: fixed;
