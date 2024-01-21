@@ -1,0 +1,2 @@
+host.docker.internal:5432:lotr:postgres:root
+rtw-armory-rtw-armory.a.aivencloud.com:10143:defaultdb:avnadmin:AVNS_g2eLQdMdem6BwyU5jmZ

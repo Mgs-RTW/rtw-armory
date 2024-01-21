@@ -1,0 +1,33 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "rtw-armory-local",
+            "Group": "Servers",
+            "Host": "host.docker.internal",
+            "Port": 5432,
+            "MaintenanceDB": "lotr",
+            "Username": "postgres",
+            "PassFile": "/var/lib/pgadmin/pgpass",
+            "SSLMode": "prefer",
+            "Comment": "Local rtw-armory db",
+            "Shared": false,
+            "SharedUsername": "postgres",
+            "BGColor": "#8ff57f",
+            "FGColor": "#000000"
+        },
+        "2": {
+            "Name": "rtw-armory-production",
+            "Group": "Servers",
+            "Host": "rtw-armory-rtw-armory.a.aivencloud.com",
+            "Port": 10143,
+            "MaintenanceDB": "defaultdb",
+            "Username": "avnadmin",
+            "PassFile": "/var/lib/pgadmin/pgpass",
+            "SSLMode": "prefer",
+            "Comment": "Production rtw-armory db",
+            "Shared": false,
+            "BGColor": "#eb7f8f",
+            "FGColor": "#000000"
+        }
+    }
+}
